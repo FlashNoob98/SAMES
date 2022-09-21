@@ -33,6 +33,21 @@ disordinata delle frequenze, nonostante talvolta abbia senso farlo, ad esempio
 su dispositivi con
 comportamento "isteretico".
 
+\begin{figure}[h]
+\centering
+\begin{circuitikz}[]
+\draw
+ (0,0) to [short , *-] ++(1,0)
+        to [R,l=R] ++(2,0)
+        to [C,l=C] ++(0,-2) to [short,-*] ++(-3,0);
+\draw (0,-2) to [open,v^>=$v_{in}$] ++(0,2);
+\draw (3,-2) to [short,*-*] ++(1,0)
+             to [open,v=$v_{out}$] ++(0,2)
+             to [short, *-*] ++(-1,0);
+\end{circuitikz}
+\caption{Filtro passa-basso}
+\end{figure}
+
 Nell'analisi di un filtro è anche importante studiare la \textit{fase} di un
 filtro,
 potrebbe essere
