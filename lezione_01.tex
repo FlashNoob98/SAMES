@@ -1,7 +1,7 @@
 \chapter{Introduzione ai sistemi automatici di misura}
 Nel seguente esempio si riporta come viene effettuato il collaudo di un filtro
 passa-basso, si organizza il comparto di misura disponendo un generatore di
-segnale opportunamente configurato, il DUT (device under Test) e uno strumento
+segnale opportunamente configurato, il DUT (Device Under Test) e uno strumento
 di misura.
 
 Per effettuare il collaudo del filtro va organizzato il banco di misura
@@ -10,18 +10,18 @@ segnale (sorgente)
 applicando uno stimolo di tipo sinusoidale e usando successivamente un
 oscilloscopio o un multimetro
 per misurare la grandezza
-in ingresso e quella in uscita
+in ingresso e quella in uscita.
 
 Effettuando la misura dei due valori e calcolato il guadagno è poi possibile
 riportare i valori su
 un grafico e realizzare la maschera del filtro, la prova va effettuata con più
-valori di frequenza
+valori di frequenza.
 
 Considerando una n-pla di frequenze con n sufficientemente grande si può
 ripetere il test
 rispettando una ovvia semantica, configurando prima la sorgente, attendendo un
 tempo di
-assestamento, poi effettuando le misure con il sistema a regime stabile
+assestamento, poi effettuando le misure con il sistema a regime stabile.
 
 Il tecnico coordina l'attività degli strumenti attivando la sorgente al tempo
 giusto e attiva
@@ -33,32 +33,36 @@ disordinata delle frequenze, nonostante talvolta abbia senso farlo, ad esempio
 su dispositivi con
 comportamento "isteretico".
 
-Nell'analisi di un filtro è anche importante studiare la FASE di un filtro,
+Nell'analisi di un filtro è anche importante studiare la \textit{fase} di un
+filtro,
 potrebbe essere
 presente anche una maschera della risposta in fase richiesta dal committente,
 ovvero lo sfasamento
-prodotto dal DUT alle basse frequenze, si ritiene che le deviazioni siano
-contenute se i punti in
-frequenza sono vicini tra loro.
+prodotto dal DUT alle basse frequenze; si ritiene che le deviazioni siano
+contenute se i punti vicini in
+frequenza sono vicini tra loro in fase.
 
-Se si deve misurare lo sfasamento tra segnali isofrequenziali, è possibile usare
+Per misurare lo sfasamento tra segnali isofrequenziali, è possibile usare
 un oscilloscopio
 oppure strumenti dedicati come i contatori universali, utilizzando il contatore
 "counter" a due
 canali si può misurare il ritardo di fase dell'uscita rispetto all'ingresso.
-
 %AGGIUNGI IMMAGINE SFAASAMENTO
+\begin{figure}[h]
+\centering\includegraphics[width=0.4\linewidth,trim={0 4mm 0
+0},clip]{misurasfasamento}
+\caption{$\Delta\varphi = 2\pi \frac{\tau}{T_0}$}
+\end{figure}
 
-$\Delta\varphi = 2\pi \tau / T_0$
 
-RUOLO DELL'OPERATORE
+\subsection{Ruolo dell'operatore}
 Questo ruolo può essere demandato per realizzare il processo in modo automatico,
-in questo caso
+in questo caso l'operatore
 svolge il processo di coordinamento tra le sorgenti, analizzando i risultati dei
 vari strumenti per
-elaborare i risultati e annotandoli in un diagramma.
+elaborare i risultati e annotarli in un diagramma.
 
-Queste azioni possono essere demandate ad un'unità funzionale UF che svolge il
+Queste azioni possono essere demandate ad un'unità funzionale (UF) che svolge il
 lavoro
 dell'operatore, quest'unità è spesso un calcolatore, si possono attivare infatti
 le funzioni degli
@@ -70,11 +74,12 @@ panel ma può essere configurato tramite la sua interfaccia, ovvero inviando all
 strumento una
 sequenza di caratteri, una stringa, che viene decodificata e interpretata
 dall'interfaccia dello
-strumento, ad esempio
+strumento, ad esempio:
 
-Stringa per generare una forma d'onda sinusoidale di 10 V picco-picco, 1000 Hz e
-0 offset DC
-(componente continua di offset):
+Stringa per generare una forma d'onda sinusoidale di 10 V picco-picco, 1000 Hz
+e un offset DC di 0 V:
+
+\noindent
 \verb|APPLY:SINusoidal 10, 1000, 0|
 
 Quest'operazione si poteva fare a partire dagli anni 70, si realizzarono dunque
@@ -96,21 +101,20 @@ effettua produzione
 di massa di dispositivi questa operazione manuale è impensabile, si effettua
 inizialmente un
 collaudo campionario, non si collauda ogni singolo campione ma deve comunque
-essere
-rappresentativa, se anche si producono un milione di pezzi almeno una centinaia
-andranno
-collaudati, quanto tempo ci vorrebbe con un operatore umano? I tempi sarebbero
+essere una popolazione
+rappresentativa, se anche si producono un milione di pezzi almeno un centinaio
+andrà
+collaudato, quanto tempo ci vorrebbe con un operatore umano? I tempi sarebbero
 troppo lunghi,
 l'affidabilità del collaudo è inoltre scarsa essendo affidata a all'operatore
 umano, nella prima
 ora ad esempio il tecnico lavora bene, nelle successive sarà sempre più stanco
-lanciando i filtri
-passa-basso dalla finestra, il costo umano per le risorse umane inoltre è
+\textit{lanciando i filtri
+passa-basso dalla finestra}, il costo umano per le risorse umane inoltre è
 elevato.
 
-Se si programma un PC co tutte le istruzioni, la configurazione della sorgente e
-dello strumento di
-misura del tipo
+Se si programma un PC con tutte le istruzioni, la configurazione dello
+strumento di misura, oscilloscopio a due canali, sarà del tipo
 
 \begin{verbatim}
 MEAS:CH1:VAC?
@@ -118,30 +122,25 @@ MEAS:CH2:VAC?
 \end{verbatim}
 
 queste istruzioni possono essere inserite in una struttura ciclica per ogni
-valore di frequenza.
-Ne guadagno in affidabilità, un macchina programmata quando esegue una struttura
-ciclica, non si
-stanca nella riproduzione ripetitiva delle stesse azioni, la macchina non fa
-altro di ciò che è
+valore di frequenza. Ne guadagno in affidabilità, un macchina programmata
+quando esegue una struttura ciclica, non si stanca nella riproduzione
+ripetitiva delle stesse azioni, la macchina non fa altro di ciò che è
 codificato nelle istruzioni.
-Se ne guadagna anche nel tempo di interazione per configurare la sorgente ad
-esempio che va a
-regime in tempi inferiori a quelli necessari all'operatore a cambiare le
-impostazioni, di
-contro mediante l'interfaccia le istruzioni e le risposte ottenute hanno ordini
-di grandezza di
+Se ne guadagna anche nel tempo di interazione per
+configurare la sorgente ad esempio che va a regime in tempi inferiori a quelli
+necessari all'operatore a cambiare le impostazioni, invece mediante
+l'interfaccia le istruzioni e le risposte ottenute hanno ordini di grandezza di
 gran lunga inferiori, lo stesso intero collaudo sulle varie frequenze può essere
-eseguito in
-frazioni di secondi.
+eseguito in frazioni di secondi.
 
-Di contro il controller non è in grado di interagire in causo di eventi in
-previsti se questi non
-sono appunto "previste" e configurate le rispettive risposte dell'unità di
+Di contro il controller non è in grado di interagire in caso di eventi
+imprevisti se questi non
+sono appunto "previsti" e configurate le rispettive risposte dell'unità di
 controllo.
-L'operatore dovrebbe traferire tutta la sua conoscenza nella macchina,
+L'operatore dovrebbe trasferire tutta la sua conoscenza nella macchina,
 aggiungendo inoltre
 ulteriori sensori alla stazione di misura, magari non direttamente collegati al
-fenoeno.
+fenomeno.
 
 Sostenuto l'investimento iniziale della programmazione dell' UF non è più
 necessaria una squadra di
@@ -152,13 +151,17 @@ posizioni e selezioni gli oggetti che superano il test o meno.
 \section{Interfaccia standard IEEE 488 - GPIB}
 La seguente interfaccia è ritenuta uno standard dagli anni 70, GPIB sta per
 \textit{General Purpose Interface Bus} sviluppata da HP, successivamente il
-ramo riferito agli sturmenti di misura è diventato Agilent e poi KeySight.
+ramo riferito agli strumenti di misura è diventato Agilent e poi KeySight.
 
 Inizialmente l'interfaccia si chiamava HPIB, gli altri costruttori poi
 standardizzarono le specifiche dell'interfaccia per complementare i loro
 strumenti di misura con quest'interfaccia, presentano un certo connettore con
-una porta standard, l'interfaccia ha una parte hardware
-%Aggiungi foto interfaccia e porta GPIB
+una porta standard.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\linewidth]{GPIB}
+\caption{Periferica GPIB con rispettiva porta (in blu)}
+\end{figure}
 
 Il PC potrebbe non essere disposto dell'interfaccia GPIB, si potrebbe
 aggiungere una scheda PCI per avere le funzionalità della porta GPIB, oggi si
@@ -172,7 +175,7 @@ impilare i connettori nello stesso punto.
 La topologia del BUS non è classificabile né di tipo a ``stella'' con un nodo
 principale, né c'è un BUS ad anello chiuso (daisy chain), si possono realizzare
 topologie ibride per raggiungere ed interconnettere tutte le unità tra loro, il
-BUS contiene 25 linee, ogni linea quando viene forzata ad un certo potenziale
+BUS contiene 25 linee, ogni linea verrà forzata ad un certo potenziale
 elettrico, questo verrà condiviso tra tutti i dispositivi collegati al BUS, a
 causa del collegamento elettrico franco, il potenziale sarà lo stesso.
 
@@ -188,10 +191,10 @@ superiore a 2V, per leggere alto 1 la tensione deve essere inferiore a 0.8V.
 
 Specifiche funzionali, le linee sono adibite ad implementare delle funzioni.
 \begin{itemize}
-\item 5 sono dette di GIM \textit{general interface management}
+\item 5 sono dette di GIM \textit{General Interface Management}
 \item 3 sono usate per la sincronizzazione, implementano il protocollo di
 handshake
-\item 8 per la trasmissione di dati \verb|DIO|
+\item 8 per la trasmissione di dati DIO
 \item 8 di riferimento, solitamente messe a massa
 \end{itemize}
 
@@ -212,51 +215,61 @@ ci si trova
 \end{itemize}
 
 \subsection{Come avviene la misura automatica}
-Si considera una stazione di misura, si immagine che il controller sia un PC ed
-analizzi il collaudo del filtro passa-basso,
-innanzitutto attesta la linea IFC portandola da 0 a 1, successivamente la linea
-REN passa da 0 a 1. Poi si attesta la ATN, si passa in regime di command mode,
+Si considera una stazione di misura, si immagina che il controller sia un PC che
+effettui il collaudo del filtro passa-basso,
+innanzitutto attesta (\textit{attesta ovvero porta a massa?}) la linea IFC
+portandola da 0 a 1, resettando tutte le interfacce, successivamente la linea
+REN (controllo remoto) passa da 0 a 1. Poi si attesta la ATN, si passa in
+regime di command mode,
 in questo regime il controller esercita l'azione di coordinamento assegnando ai
-vari strumenti di misura dei ruoli e i ruoli possibili sono: \textit{talker} o
-\textit{listener} ovvero lo strumento che invia dati al controller o riceve
+vari strumenti di misura dei ruoli e i ruoli possibili sono: \textit{TALKER} o
+\textit{LISTENER} ovvero lo strumento che invia dati al controller o riceve
 dati dal controller o da un altro talker, due ulteriori ruoli sono
-\textit{controller} (non assegnabile a tutti gli strumenti), può essere comodo
+\textit{CONTROLLER} (non assegnabile a tutti gli strumenti), può essere comodo
 avere più controller; il quarto ruolo è ``ozioso'' \textit{IDLE}, non
 effettuano alcuna azione, non vengono coinvolti nella fase di misura.
 
 \verb|IFC>REN>ATN|
 
 Per assegnare un ruolo a ciascuno strumento, il controller utilizza gli
-indirizzi, dei numeri identificativi associati univocamente e staticamente gli
+indirizzi, dei numeri identificativi associati univocamente e staticamente agli
 strumenti, si hanno a disposizione 31 indirizzi primari, da 0 a 30, l'indirizzo
-0 è prerogativa del controller di sistema, non utilizzabile. È possibile che ci
+0 è riservato al controller di sistema, non utilizzabile. È possibile che ci
 siano altri controller.
 
 Il controller invia al BUS dei comandi di configurazione, di interfaccia e
-tutti i dispositivi devono stare liberi sul BUS.
-Se il controller vuole assegnare alla sorgente, identificata con 1, configura
-le linee i dati e invia l'informazione nel byte dati, nei 5 bit meno
-significativi inserisce l'indirizzo dello strumento a cui vuole assegnare un
-ruolo. Va sempre garantire la parità del byte, il numero di 1 deve sempre
-essere pari, ad esempio per impostare il generatore a listener (01), 01 è il
-capabiliy code, 01 listener, 10 per talker, invia il seguente byte
+tutti i dispositivi devono essere liberi sul BUS.
+Se il controller vuole assegnare al generatore, identificato ad esempio con 1,
+configura
+le linee dati e invia l'informazione nel byte dati, nei 5 bit meno
+significativi inserisce l'indirizzo dello strumento a cui vuole assegnare il
+ruolo.
+Il sesto e il settimo bit (capability code) assegnano i due ruoli di
+\textit{listener} (01) e \textit{talker}(10). Va sempre garantita la parità del
+byte come controllo degli errori di trasmissione, il numero di ``1'' nel byte
+dati deve sempre
+essere pari, ad esempio per impostare il generatore con indirizzo 1 a listener
+(01), invia il seguente byte
 
 \verb|00100001 (!)|
 
 il bit più significativo viene impostato a 0 o 1 per mantenere la parità.
-Poi informa a tutte le unità il ruolo di parlatore a sè stesso, il campo
+
+Il controller
+informa a tutte le unità il ruolo di parlatore a sè stesso, nel campo
 indirizzo di 5 bit inserisce l'indirizzo 0, nel sesto il codice che identifica
 il parlatore (10), si avrà dunque il seguente byte:
 
 \verb|11000000 (@)|
 
 Nei byte sono associati i rispettivi codici \verb|ASCII|, rilasciando la linea
-ATN, tornando alta si ritorna in regime di funzionamento di \textit{device
+ATN, ovvero tornando alta (0), si ritorna in regime di funzionamento di
+\textit{device
 mode}, le unità che non sono state chiamate in alcun ruolo si pongono in stato
-IDLE e non prestano attenzione a ciò che viaggia sul BUS, partecipa alla
-comunicazione, in questo caso solo la sorgente.
+IDLE e non prestano attenzione a ciò che viaggia sul BUS, partecipano alla
+comunicazione, in questo caso solo la sorgente e il controller.
+In command mode invece i messaggi vengono letti da tutti i dispositivi.
 
-%In command mode invece i messaggi vengono letti da tutti i dispositivi.
 Il comando in formato ASCII viene inviato un carattere alla volta, la sequenza
 di byte viene trasferita sui canali DIO dal parlatore e recepiti
 dall'ascoltatore, i tempi di trasmissione sono solitamente di una manciata di
@@ -265,9 +278,3 @@ secondi.
 Nel regime di Command Mode viaggiano i comandi di interfaccia standard,
 rilasciata la linea la comunicazione avviene con il linguaggio di dispositivo,
 ogni dispositivo può avere il suo linguaggio.
-
-
-
-
-
-
