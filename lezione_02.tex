@@ -1,0 +1,145 @@
+
+\section{Approfondimenti sul BUS IEEE 488 - GPIB}
+Presenta 5 linee di GIM tra le quali
+\begin{itemize}
+ \item IFC
+ \item REN
+ \item ATN
+ SRQ
+ EOI
+\end{itemize}
+tre linee per la sincronizzazione che seguono il protocollo ``handshake'',
+8 linnee per la trasmissione dati e 8 linee di riferimento (GND).
+
+Un esempio di processo di misura da automatizzare è ancora il collaudo di un
+doppio bipolo che realizza un filtro passa basso, il banco è costituito da tre
+strumenti e un controller.
+Il controller è un PC con interfaccia IEEE488, un counter a due canali, una
+sorgente a singolo canale e un multimetro digitale a due canali.
+Anche gli strumenti, come il PC sono dotati di interfaccia.
+
+Il counter serve a misurare lo sfasamento tra i segnali isofrequenziali, il
+multimetro misura il guadagno introdotto dal filtro, solitamente un guadagno
+unitario nella banda passante che si riduce man mano entrando nella frequenza
+di transizione, oltre la frequenza di taglio.
+
+Il controller attesta la linea IFC e subito dopo da un secondo comando
+universale unilinea REN in cui specifica alle unià periferiche che riceveranno
+i comandi tramite interfaccia e non tramite pannello. Si attesta poi la linea
+ATN e la stazione di misura viene posta in regime ``command mode''.
+
+Il controller in questo funzionamento assegna dei ruoli agli strumenti mediante
+un meccanismo di indirizzamento, ad ogni strumento sarà assegnato un indirizzo,
+un intero che va da 1 a 30, per specificare quest'indirizzo si utilizzano 5 bit.
+
+Con 5 bit si realizzerebbero $2^5$ combinazioni ma l'indirizzo 0 è riservato al
+controller mentre l'indirizzo 31 è necessario all'abilitazione di un indirizzo
+secondario, come ad esempio un modulo particolare di un certo strumento.
+
+Sono comunque poche le applicazioni che necessitano del meccanismo di
+indirizzamento secondario.
+
+Si assegni alla sorgente l'indirizzo 1, al multimetro l'indirizzo 2 e al
+counter l'indirizzo 8.
+Per configurare inizialmente la sorgente va inviato un comando in regime
+``device mode'' comprensibile solo alla sorgente, dopo averle assegnato un
+ruolo, si riserva il bus ad una comunicazione dedicata tra un talker e un
+listener.
+
+Per assegnare il ruolo di listener alla sorgente si utilizzano lel linee dati
+usando i 5 bit meno significativi l'indirizzo dello strumento, assegnando un
+ruolo mediante il sesto e il settimo bit, l'ottavo bit rispetta la regola della
+parità.
+
+Il controller assegna il ruolo di listener al dispositivo con indirizzo 1
+
+\verb|00100001 - A - !|
+
+Si configura il controller come listener
+\verb|11000000 - \@ - MTA0|
+
+Si rilascia infine la inea attention (ATN) passando al regime device mode, il
+counter e il multimetro non hanno visto il loro indirizzo, restando in idle.
+
+La comunicazione sul BUS prevede sempre un solo talker ma può avere più
+listener a patto che comprendano lo stesso linguaggio.
+
+Gli strumenti di misura hanno sempre in allegato dei manuali, o una
+documentazione con una sezione riservata alla programmazione dello strumento.
+
+Un comando che solitamente si usa per configurare la sorgente è il comando
+
+\verb|APPLy:SINusoidal 10,1000,0|
+
+Nella sintassi estesa si può aggiungere l'unità di misura dei valori.
+La sintassi contratta è composta solo dalle parti in maiuscolo, la sintassi è
+decisa dal costruttore.
+Si potrebbe in teoria assegnare un comando per ciascun carattere, riducendo il
+numero di caratteri da inviare.
+
+La velocità di throughput può raggiungere velocità pari al megabyte/s.
+Lo standard richiede di non utilizzare cavi di lunghezza maggiori.
+
+Rendere il linguaggio dello strumento stringato si è riscontrato che i comandi
+per attivare le funzioni sono più semplici da memorizzare.
+La scelta dei costruttori è stata quella di configurare i comandi da renderli
+facilmente memorizzabili.
+
+Durante la configurazione, la sorgente inizia a a generare il segnale stabile,
+rendendo l'inerfaccia indipenente.
+
+All'invio di ogni byte in device mode, si attiva una procedura di
+configurazione per lo scambio dei dati con conseguente sincronizzazione
+
+Se lo strumento riceve un comando errato, va in errore.
+
+Il talker configura le linee dati utilizzando la procedura di handshake per
+sincronizzare la comunicazione, quando ha terminato il messaggio, invia l'EOI,
+end of ``I''
+
+Terminata la comunicazione dal sistema sorgente, a talker torna il possesse oel
+bus.
+
+In regime command mode il controller associa il ruolo di listener
+all'indirizzo 2
+
+\verb|00100010|
+e a ancora il ruolo di listener a sé stesso, vanno ora inviati dei comandi di
+\textit{deselezione} degli strumenti precedentemente attivati, ad esempio si
+invia il seguente comando per deselezionare i listener precedentemente attivati
+
+\verb|00111111 - ?|
+
+oppure per deselezionare i talker con il comando ``\_''
+
+\verb|01011111 - _|
+
+Per ottenere il risultato dal multimetro dopo averlo impostato come listener si
+invia un comando di QUERY, terminato da punto interrogativo (?)
+
+\verb|MEAS:CH1:VAC?|
+Lo strumento deve conservare il risultato perché dopo una QUERY allo strumento
+verrà assegnato il ruolo di parlatore e invierà il risultato al listener, il
+ruolo di parlatore al dispositivo 2 si invia con il carattere B, ancora una
+volta il controllo si imposta come listener con il carattere ``barra
+spaziatrice''
+
+\verb|01000010 - B|
+
+Quando il multimetro termina la comunicazione si ritorna in regime di command
+mode, si ripete la procedura per rieseguire la misura sul canale 2 (\verb|CH2|).
+
+Lo stesso processo si ripete per il counter per eseguire la misura di
+sfasamento, deseleziona precedenti listener e talker, invia una QUERY al
+counter dopo averlo impostato come listener, dopo si imposta come talker per
+permettergli l'invio del risultato.
+
+
+
+Quelli presentati sono comandi multi linea universali, perché utilizzano più
+linee per comunicare con i dispositivi, possono essere specifici se hanno un
+indirizzo specifico e si riferiscono ad un singolo dispositivo oppure possono
+essere aspecifici se inviano un comando a tutti i dispositivi come la
+deselezione.
+
+
