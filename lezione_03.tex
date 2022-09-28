@@ -1,0 +1,169 @@
+\section{Interfaccia VXI IEEE 1155}
+Un'interfaccia che raccolse una certa attenzione fu la tecnologia \textbf{VXI},
+si perse l'aspetto stand-alone dello strumento dato che i sistemi VXI sono molto
+compatti e ospitati in un cestello, sono strumenti su scheda elettronica,
+possono essere alloggiati in qualche slot, non c'è alcuno spazio negli slot per
+un'interfaccia completa, si perde la caratteristica stand-alone.
+
+Il cestello tramite il back plain alimenta le schede, l'interazione può
+avvenire solo mediante l'interfaccia VXI, tramite righe di comando per
+richiedere determinate funzioni.
+Il vantaggio è avere una stazione di misura particolarmente compatta, la
+strumentazione su scheda riesce a scambiare flussi dati tra i vari moduli ad
+una velocità maggiore rispetto all'interfaccia IEEE 488.
+I bus sono molto corti, a volte sono piste stampate sul back plain, c'è la
+capacità di trasferire i dati in maniera efficiente.
+
+Standard similari al VXI sono stati \textbf{PXI}, cestelli ancora più compatti,
+concepiti alla stessa maniera.
+Si è persa l'interfaccia degli strumenti e le unità non sono più stand-alone,
+durante l'esecuzione del processo di misura non c'è alcun feedback su cosa stia
+accadendo, si vedono al massimo dei LED lampeggiare, l'utilizzatore deve avere
+un livello professionale più alto.
+Il tecnico ha dunque un costo più alto.
+In più la stessa strumentazione ha dei costi elevati, quindi non è semplice
+sostituire gli strumenti più vecchi, si tende dunque a restare legati alla
+soluzione, anche più vecchia, sulla quale sono stati investiti più soldi.
+
+Gran parte delle PMI adotta infatti ancora lo standard GPIB con strumentazione
+stand-alone.
+Il successo è dunque stato limitato rispetto allo standard GPIB.
+
+\section{Interfaccia $I^2C$ e $SPI$}
+L'acronimo \textbf{$I^2C$} sta per Inter Integrated Circuit, sono protocolli di
+basso livello, consentono la comunicazione tra moduli elettronici integrati,
+dei chip, comparsi circa negli anni '80, comparse prima SPI sviluppata da
+Motorola, la sezione che ora se ne occupa è FreeScale Semiconductor.
+Il microprocessore Motorola 6800 fu molto diffuso.
+
+Il protocollo SPI è un protocollo master-slave, saranno presenti sulla scheda
+elettronica un modulo master e uno o più moduli slave.
+Sono presenti più linee, le più comuni sono
+\begin{itemize}
+\item SLCK Linea di clock
+\item MOSI Master Output Slave Input, linea uilizzata dal master
+\item MISO Master Input Slave Output linea utilizzata dagli slave per
+comunicare con il master
+\item SS Selezione dello Slave, il master indica con quale unità vuole
+colloquiare
+\end{itemize}
+La comunicazione è full-duplex, l'uno può parlare all'altro e viceversa
+contemporaneamente, viceversa si avrebbe una comunicazione half-duplex se si
+usasse una sola linea.
+
+Per ogni comunicazione sono necessarie 4 linee che (eccetto la SS) possono
+essere condivise tra i vari slave, deve invece essere necessaria una linea SS
+sul chip master per ogni slave che si vuole collegare.
+
+La linea di SLCK e SS è ad intero appannaggio del master, viceversa le altre
+due linee possono essere controllate dagli slave.
+Non può esistere una comunicazione diretta tra due slave.
+
+Il protocollo non vincola la frequenza del clock, il master potrebbe decidere di
+lavorare con un clock più alto op più basso, a seconda del chip disponibile.
+(?) Il master si adatta allo slave facendolo lavorare alla sua frequenza
+indicata.
+
+La tipologia di comunicazioni si dividono in
+\begin{itemize}
+ \item Clock Polarity (0-1)
+\item Clock Phase (0-1)
+\end{itemize}
+
+Il chip slave può essere impostato per configurare il dato sul fronte di
+salita, e leggerlo sul fronte di discesa.
+L'attività sulle linee MOSI e MISO sono sincrone.
+
+
+Il Master può parlare di volta in volta con uno slave, non c'è la
+possibilità di una comunicazione multipla
+
+
+\section{Protocollo I2C}
+Il protocollo I2C è stato utilizzato molto ad esempio per il dispositivo
+Arduino.
+
+Esistono solo due linee nel protocollo I2C, una linea di clock ed una per il
+trasferimento dati, il pilotaggio delle linee avviene in maniera simile alla
+linea GPIB ma si utilizzano dei mosfet al posto dei BJT.
+Il protocollo è multi-master e consente di collegare tra loro non solo coppie di
+dispositivi ma un insieme di \textit{n} dispositivi collegati sulla stessa
+coppia.
+Ogni dispositivo può diventare master sul BUS che è quindi una risorsa
+condivisa.
+
+Chi vuol parlare sul BUS dà un segnale di START che corrisponde ad un evento
+anomalo, dato che lo standard prevede che la linea dati possa essere
+configurata solo quando il clock è basso, la transizione della linea dati
+quando il clock è alto è un evento anomalo; in generale il protocollo prevede
+che la linea dati possa essere configurata solo a clock basso. Allo stesso modo
+il segnale di STOP è un evento anomalo con una configurazione della linea dati
+SDA con il clock SCL alto.
+
+Ogni dispositivo presenta un indirizzo a 7bit, esiste anche un meccanismo a 10
+bit, la pluralità di dispositivi è elevatissima, fino a 128 in teoria con i 7
+bit, abilitando la comunicazione a 10 bit si raggiungono invece numeri enormi.
+
+Il modulo che dà il segnale di START identifica il dispositivo slave con il
+quale vuole parlare mediante il suo indirizzo, l'ottavo bit indica se il master
+vuole ascoltare o leggere dallo slave, 1 voglio leggere, 0 voglio scrivere.
+Dopo aver trasferito i dati (8bits) si ha il bit di risposta dell'ascoltatore
+che invia il bit ACK di acknowledge, attesta la linea, la
+logica non è negata quindi linea attestata è pari al livello logico 0 e
+viceversa con linea rilasciata.
+
+Si trasmettono i dati per 8 bit e chi ascolta invia un bit di ACK ogni 8 bit
+ricevuti, chi parla dopo aver trasmesso il suo messaggio rilascia il BUS con
+l'evento di STOP, rilasciando la linea dati quando il clock è alto.
+Il bit ACK è sempre fornito da chi ascolta a prescindere se questo sia il
+master o lo slave.
+
+Nel caso in cui il master sia in ascolto questo può terminare la comunicazione
+inviando un messaggio di ACK rilasciando la linea e non attestandola (bit 1)
+successivamente si invia l'evento di STOP sul BUS.
+Anche se il messaggio non è stato trasferito completamente, il master potrebbe
+tornare in ascolto del dispositivo successivamente.
+
+Potrebbe capitare che due unità decidano di parlare simultaneamente sulla linea
+che è comunque in logica wired-or, se un dispositivo attesta la linea questa va
+giù per tutti, entrambe le periferiche avviano la configurazione della linea
+dati per inviare l'indirizzo della periferica slave con la quale vogliono
+parlare. Se gli indirizzi sono diversi prevale allora uno dei due.
+
+Ad esempio un master vuole parlare con lo strumento ad indirizzo 1
+
+\verb|0000001|
+
+mentre un altro vuole parlare con il dispositivo ad indirizzo 3
+
+\verb|0000011|
+
+Quando si trasmette in contemporanea il sesto bit il dispositivo che voleva
+comunicare con quello ad indirizzo 3 si rende conto che non può rilasciare la
+linea che invece è stata attestata dal dispositivo che comunicava con indirizzo
+1, dunque si mette in IDLE e capisce che non deve continuare la comunicazione.
+Si dice dunque che il dispositivo ad indirizzo 1 ha la priorità su quello ad
+indirizzo 3.
+
+Se ancora entrambi i master volessero parlare con lo stesso dispositivo il
+controllo della linea avverrebbe sulla trasmissione dei dati, uno dei due
+dispositivi master si rende conto in ogni caso di dover porsi in attesa.
+
+Nella configurazione a 10bit si inviano prima quattro 1 per inviare un comando
+riservato e far capire ai dispositivi che si sta utilizzando l'indirizzamento a
+10 bit, 8 in un byte e i restanti due nel byte precedente.
+
+
+Il CLOCK è variabile, si può lavorare in modalità slow mood o fast mood o
+ancora fast mood Plus, o ancora una modalità a 3.4Mb/s, non tutte le
+periferiche supportano queste velocità, il master attiva la comunicazione al
+valore più alto possibile (10kHz 400kHz o 1 MHz).
+Esiste un meccanismo di CLOCK stretching che consente ad una periferica di
+rallentare il clock. Anche la periferica richiamata dunque può intervenire
+sulla linea di clock e gestirla, dunque se una periferica che lavora
+nominalmente a 10kHz dovesse aver problemi e rallentare potrebbe comunque
+gestire la linea di clock e raggiungere ancora il sincronismo.
+
+Ancora oggi si utilizzano entrambe le soluzioni SPI e I2C.
+
+
