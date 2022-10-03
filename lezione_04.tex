@@ -26,6 +26,7 @@ La potenza di un segnale è definita come
 \begin{equation}
  P_x = \lim_{T\to+\infty} \left(\frac{1}{T}\int_{-T/2}^{+T/2} |x(t)|^2
 dt\right) < +\infty
+\label{eq:potenza_segnale}
 \end{equation}
 
 Il segnale sinusoidale ad esempio non è un segnale di energia ma è un segnale
@@ -135,7 +136,88 @@ b_k &= \frac{2}{T_0} \int_{T_0} x(t)\sin(2\pi k f_0 t) dt
 
 Viceversa per il calcolo di $c_k$ si ottiene
 $$
-c_k = \frac{1}{T_0}\int_{T_0} x(t) e^{j2\pi k f_0 t}dt
+c_k = \frac{1}{T_0}\int_{T_0} x(t) e^{-j2\pi k f_0 t}dt
 $$
 ciò che identifica il segnale diventa esclusivamente il valore dei coefficienti
 $c_k$
+
+
+Se si lavora in regime periodico distorto, grazie alla scomposizione armonica
+si può studiare la potenza dissipata da ciascuna armonica, analizzando sempre
+la rete con il PSE, pensando che questa sia sollecitata a tante sorgenti
+ciascuna sollecitata a frequenze diverse, l'ampiezza $\frac{A_k}{\sqrt2}$ sarà
+il valor efficace della singola armonica mentre la potenza per l'armonica
+k-esima sarà $\frac{A_k^2}{2}$.
+
+Richiamando la \ref{eq:potenza_segnale}
+si ottiene \textit{l'identità di Parseval}
+$$
+P_k = \lim_{T\to\infty} \int_{-T/2}^{T/2} |x(t)|^2 dt =
+\sum_{k=-\infty}^{+\infty} |c_k|^2
+$$
+i coefficienti $k$ e $-k$ sono tra loro complessi e
+coniugati, dunque hanno lo stesso modulo, per questo motivo c'è corrispondenza
+nell'identità di Parseval.
+
+In precedenza lo studio delle potenze dissipate dalle armoniche sulla rete era
+di poca importanza, con l'avvento degli alimentatori switching è aumentato
+fortemente l'interesse verso l'analisi dei segnali al fine di comprendere le
+potenze in gioco con la diffusione di quest'ultimi.
+
+
+\subsection{Analisi di un treno di impulsi}
+Sia un segnale impulsivo $P_\tau$ di durata $\tau$ centrato nell'origine e
+ampiezza unitaria, questo segnale viene replicato con passo $T_0$ con un certo
+operatore arbitrario denominato $rep$, dunque il segnale periodico è
+$$
+A\cdot rep_{T_0} \{p_\tau(t) \} = A\sum_{k=-\infty}^{+\infty} P_\tau(t-kT_0)
+$$
+ tutti gli impulsi saranno centrati in $kT_0$ e avranno ampiezza $A$, con
+durata pari ad una frazione di $T_0$ pari a $D = \tau/T_0$ chiamata
+\textit{duty cycle}.
+
+Essendo un segnale periodico ammette una rappresentazione in serie di Fourier,
+si vogliono determinare i coefficienti $c_k$ che sintetizzino questa
+rappresentazione:
+$$
+c_k = \frac{1}{T_0}\int_{T_0} A\cdot rep_{T_0}\{P_\tau(t)\}e^{-j2\pi k f_0 t} dt
+$$
+un intervallo comodo sarà proprio quello centrato nell'origine $[-T_0/2,
+T_0/2]$, il treno d'impulsi sarà nullo in gran parte dell'intervallo e non
+nullo solo nell'intervallo $[-\tau/2,\tau/2]$ dunque l'integrale sarà ristretto
+a questo sotto-intervallo
+$$
+c_k = \frac{1}{T_0}\int_{-\tau/2}^{\tau/2} A\cdot e^{-j2\pi k f_0 t}dt =
+\left.\frac{A}{\cancel{T_0}  (-j2\pi kf_0)} e^{-j 2\pi k\cancel{f_0}t}
+\right|_{-\tau/2}^{\tau/2} = \frac{A}{j2\pi k } \left( -e^{-j\pi kf_0 \tau} +
+e^{+j\pi kf_0 \tau}
+\right)
+$$
+Riportando il fattore $2j$ all'interno della parentesi si riconosce
+l'espressione del seno e si ritrova il fattore $D = \tau/T_0 = f_0\tau$
+dunque
+$$
+c_k = \frac{A}{\pi k} \sin(\pi k D) = \frac{AD}{\pi kD} \sin(\pi k D) =  AD
+\text{ sinc}(kD)
+$$
+dove sinc è il seno campionatore così definito
+$$
+\text{sinc}(x) \stackrel{\Delta}{=} \frac{\sin{\pi x}}{\pi x}
+$$
+è una funzione oscillante pari con un inviluppo di tipo iperbolico,
+%Inserisci grafico SINC
+è un segnale di energia data la sua natura convergente all'infinito.
+
+In questo caso i coefficienti $c_k$ corrispondono a punti sul grafico della
+funzione sinc, nel punto $k=0$ si ottiene proprio il coefficiente $c_0$ pari
+alla componente continua del segnale rappresentato mediante la serie di
+Fourier, la componente continua è dunque pari ad $A\cdot D$ dunque il
+\textit{duty cycle} esprime l'energia del segnale.
+
+La funzione sinc ha dei
+nulli in corrispondenza dei valori interi dell'argomento, ovvero sinc($x$) si
+annulla nei multipli interi di $\pi$ dunque se $D = 0.5$ tutte le volte che $k$
+è pari l'argomento del sinc è intero, dunque tutte le armoniche pari saranno
+nulle.
+Se invece il duty cycle è $D=1/3 = 0.\overline{3}$ tutte le armoniche
+\textit{triple} ovvero multiple di 3 saranno nulle.
