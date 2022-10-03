@@ -1,0 +1,141 @@
+
+\chapter{Elaborazione dei segnali}
+
+Chi lavora con i segnali vede il segnale come un oggetto adimensionale,
+trattando il concetto di \textit{potenza} ed \textit{energia} di un segnale
+senza vedere effettivamente il senso e la grandezza fisica del segnale.
+Esistono i segnali di tipo \textbf{deterministico} e segnali di tipo
+\textbf{aleatorio}.
+Se il segnale è di natura deterministica sono in grado di determinare
+l'espressione del segnale, se invece è di natura aleatoria non posso
+determinare in forma chiusa il suo andamento, data appunto la sua natura
+stocastica, aleatoria.
+
+Un segnale è una grandezza fisica o misurabile che evolve nel tempo, il
+segnalamento sta nelle caratteristiche dell'evoluzione temporale.
+Nel caso limite il segnale può essere banale ossia costante nel tempo.
+
+Un segnale è detto di energia ed è dotato di energia se la grandezza
+\begin{equation}
+ \varepsilon_x = \int_{-\infty}^{+\infty} |x(t)|^2 dt < +\infty
+\end{equation}
+è finita, tutti i segnali transitori che decadono in un certo intervallo di
+tempo sono segnali di energia.
+
+La potenza di un segnale è definita come
+\begin{equation}
+ P_x = \lim_{T\to+\infty} \left(\frac{1}{T}\int_{-T/2}^{+T/2} |x(t)|^2
+dt\right) < +\infty
+\end{equation}
+
+Il segnale sinusoidale ad esempio non è un segnale di energia ma è un segnale
+di potenza, se si valuta il valor medio su un intervallo pari ad un periodo o
+multiplo di periodo, si può determinare la potenza del segnale.
+
+In base alle definizioni l'energia si esprime ad esempio in $V^2/s$ mentre la
+potenza rimarrebbe $V^2$, anche se non ci sarebbe alcuna correlazione fisica con
+la potenza elettrica. Ci sarebbe corrispondenza tra potenza del segnale e
+potenza elettrica se il segnale fosse proprio $v(t)\cdot i(t)$ o nel caso
+semplice $|v(t)|^2/R$.
+
+\section{I segnali periodici}
+Tipicamente in ingegneria elettrica i segnali analizzati sono periodici,
+possono essere più o meno distorti ma sempre riconducibili a serie di segnali
+periodici.
+La classe di segnali periodici si identifica come la classe di segnali che
+soddisfa il vincolo
+$$
+x(t+kT_0) = x(t) \forall k \in \mathrm{Z}
+$$
+dove $T_0$ è proprio il periodo del segnale.
+
+Se un segnale è semplice si può esprimere con una semplice funzione
+sinusoidale, oppure esistono segnali di forma canonica come i segnali
+triangolari o ad onda quadra, in alternativa si può rappresentare un segnale
+periodico con la sua serie di Fourier
+\begin{equation}
+ x(t) = A_0 + \sum_{k=1}^{\infty} A_k \cos \left( 2\pi f_0 t - \phi_k \right)
+\end{equation}
+con $f_0= \frac{1}{T_0}$ la frequenza fondamentale, per $k$ diverso da uno
+invece si hanno altre frequenze chiamate componenti armoniche perché sono un
+multiplo intero della frequenza fondamentale.
+Il termine $A_0$ rappresenta la componente continua, se diversa da 0 il segnale
+non è alternato.
+
+Il termine sinusoidale si può scomporre con un termine in fase ed uno in
+quadratura.
+
+\begin{equation}\begin{aligned}
+ \cos(\alpha-\beta) &= \cos\alpha\cos\beta+\sin\alpha\sin\beta \\
+ x(t) &= A_0 + \sum_{k=1}^{\infty} \left[ A_k\cos\phi_k\cos(2\pi k f_0 t) +
+A_k\sin\phi_k\sin(2\pi k f_0t) \right] \\
+x(t) &= a_0 + \sum_{k=1}^{\infty}\left[a_k\cos(2\pi k f_0) + b_k\sin(2\pi k
+f_0)\right]
+\end{aligned}
+ \end{equation}
+
+I due termini sono dunque in quadratura tra loro
+\begin{equation*}
+\begin{aligned}
+\left\{\begin{aligned}
+a_k &= A_k\cos\phi_k\\
+b_k &= A_k\sin\phi_k
+\end{aligned}\right. \\
+&\text{dunque}\\
+A_k &= \sqrt{a_k^2 + b_k^2}\\ \left\{
+\begin{aligned}
+\phi_k &= \tan^{-1}\left(\frac{b_k}{a_k}\right) \quad a_k > 0 \\
+ \phi_k &=\pi - \tan^{-1} \left(\frac{b_k}{a_k}\right) \quad a_k < 0
+ \end{aligned}\right.
+\end{aligned}
+\end{equation*}
+
+Si ricorda la seguente definizione della formula di Eulero
+\begin{equation}
+ e^{\pm jx} = \cos{x} \pm j\sin{x}
+\end{equation}
+con la scomposizione in serie si può esprimere la funzione esponenziale
+con la seguente forma
+\begin{equation*}
+e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1+x+\frac{x^2}{2}+ \dots
+\end{equation*}
+
+Se le serie hanno segno alternato, ossia sono serie oscillanti, allora si può
+estrarre le rappresentazioni delle serie proprie di seno e coseno.
+
+Utilizzando le formule di Eulero si riscrive la serie del segnale
+\begin{equation*}\begin{aligned}
+ x(t) &= a_0 + \sum_{k=1}^{+\infty} a_k \frac{e^{j2\pi kf_0t} + e^{-j2\pi
+kf_0t}}{2} + b_k \frac{e^{j2\pi kf_0t}-e^{-j2\pi kf_0t}}{2j} \\
+&=  a_0 + \sum_{k=1}^{+\infty}\left[\frac{a_k-jb_k}{2}e^{j2\pi k f_0 t} +
+\frac{a_k+jb_k}{2} e^{-j2\pi kf_0 t} \right]
+\end{aligned}\end{equation*}
+ raggruppando i coefficienti si ottiene
+ $$\begin{aligned}
+ c_k &= \frac{a_k-jb_k}{2} \\
+ c_k^* &= \frac{a_k+jb_k}{2}
+ \end{aligned}$$
+Il segnale in forma compatta diventa
+ $$
+ x(t) = \sum_{k=-\infty}^{+\infty} c_k e^{j2\pi k f_0 t}
+ $$
+Si è ottenuta un'espressione estremamente compatta.
+Lavorando sulle precedenti espressioni si ricava
+$$\begin{aligned}
+|c_k| &= c_k\cdot c_k^* = \frac{A_k}{2}\\
+\angle c_k &= \tan^{-1}_4\left(\frac{b_k}{a_k}\right)
+\end{aligned}$$
+
+Dato un segnale generico si può scomporre in serie ed ottenere i due
+coefficienti con le seguenti formule:
+$$\begin{aligned}
+a_k &= \frac{2}{T_0} \int_{T_0} x(t)\cos(2\pi k f_0 t) dt\\
+b_k &= \frac{2}{T_0} \int_{T_0} x(t)\sin(2\pi k f_0 t) dt
+\end{aligned}$$
+
+Viceversa per il calcolo di $c_k$ si ottiene
+$$
+c_k = \frac{1}{T_0}\int_{T_0} x(t) e^{j2\pi k f_0 t}dt
+$$
+ciò che identifica il segnale diventa esclusivamente il valore dei coefficienti
+$c_k$
