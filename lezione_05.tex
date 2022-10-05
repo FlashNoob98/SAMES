@@ -1,0 +1,99 @@
+
+La rappresentazione spettrale è equipollente alla rappresentazione alternativa
+che sarebbe possibile fornire con la rappresentazione analitica.
+
+La rappresentazione più comune è quella mediante l'utilizzo degli spettri, in
+ampiezza e fase, l'ampiezza si assume convenzionalmente positiva, un'eventuale
+inversione di segno viene riportata nello spettro delle fasi.
+
+Per un segnale periodico sussiste la seguente rappresentazione a coefficienti
+complessi
+$$
+x(t) = \sum_{k=-\infty}^{+\infty} c_k e^{j 2\pi k f_0 t}
+$$
+Si può dunque passare da una rappresentazione monolatera ad una bilatera, a
+frequenze ``negative'' corrispondono valori delle fasi di ``$c_k$
+antisimmetrici, di segno opposto dato che $c_k = c_k^*$.
+
+Viceversa lo spettro di ampiezza sarà simmetrico rispetto all'asse verticale,
+le ampiezze però saranno dimezzate ($|c_k| = A_k/2$).
+
+Sono sensate dunque anche le frequenze negative che compaiono nella
+rappresentazione bilatera.
+
+La sequenza dei coefficienti complessi è Hermitiana, ossia sono sequenze
+complesse che rispettano una simmetria pari nel modulo e dispari nella fase, la
+loro somma dà sempre una coppia di termini reali.
+
+
+Segnale replica dell'impulso di durata $\tau$ e ampiezza unitaria.
+
+
+$$
+x(t)=AR_Rep_{T_0}\{P_\tau(t)\}
+$$
+Se la durata degli impulsi diminuisce, deve aumentare l'altezza, si ricorda che
+l'integrale dell'impulso è sempre unitario.
+
+Si esegue l'integrale dopo aver calcolato il limite.
+$$
++{\tau\to0} \text{ rep}_{T_0} \left\{\frac{1}{\tau_z}\right\} = \lim_{\tau \to
+0}
+\left[ \frac{1}{\tau} \sum_{k=-\infty}^{+\infty}  P_\tau(t-kT_0) \right] =
+\hat{x}(t)
+$$
+dunque
+$$
+\int_{\hat{k}T_0-\varepsilon}^{\hat{k}T_0-\varepsilon} \hat{x}(t)dt = 1
+$$
+Il treno di impulsi opportunamente scelto converge ad una funzione
+generalizzata denominata \textit{Delta di Dirac}.
+
+La delta gode della seguente proprietà di \textit{campionamento}
+ossia
+$$
+\int_{-\infty}^{+\infty} x(t)
+\delta(t-t_0) dt = x(t_0)
+$$
+
+Si analizza lo spettro del treno campionatore, si dice che assuma uno spettro
+''a pettine``.
+
+$$
+\frac{1}{\tau} \text{ rep}_{T_0} \{P_\tau(t)\} = \sum{k-\infty}^{+\infty} c_k
+e^{j2\pi k f_0} = ... = \sum f_0e^{j2k\pi f_0}
+$$
+
+Sono tutti multipli alla stessa ampiezza.
+
+Lo spettro a pettine può essere chiamato con la sommatoria
+$$
+\sum_{k=-\infty}^{+\infty} \delta(t-kT_0)
+$$
+
+
+\section{Analisi spettrale di segnali non periodici}
+Lo spettro di un segnale descritto da una certa funzione $x(t)$ è ciò che si
+ottiene valutando la trasformata di Fourier.
+
+Si consideri un segnale periodico, può essere rappresentato in una forma
+compatta ed elegante in una forma trigonometrica con coefficienti complessi
+$c_k$.
+
+Se il segnale non è periodico? Si assuma un segnale non periodico con un
+periodo $T_0$ estremamente grande, allora $f_0\to 0 $ dunque il contenuto
+spettrale si addensa in una zona più piccola.
+
+Si riscrive il coefficiente al variare della frequenza. Si potrebbe
+rappresentare il segnale mediante i contributi pesati in frequenza.
+
+Si ottiene la definizione o equazione di \textit{sintesi} di Trasformata di
+Fourier
+$$
+F[x(t)] = \int_{-\infty}^{+\infty} X(f) e^{j2\pi ft} df
+$$
+
+Viceversa l'equazione di analisi della trasformata di Fourier
+$$
+F^{-1}[X(f)] = \int_{-\infty}^{+\infty} x(t) e^{-j2\pi ft}dt
+$$
