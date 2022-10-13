@@ -36,14 +36,14 @@
 \newcommand{\picwid}{0.35\linewidth}
 \usepackage{tikz}
 \usepackage{pgfplots} % Plot dei grafici
-\pgfplotsset{compat=1.18}
+\pgfplotsset{compat = 1.18}
 % Riduzione tempi di compilazione esternalizzando le figure in pdf separati
 \usepgfplotslibrary{external}
 %\usetikzlibrary{pgfplots.external}
-\tikzexternalize[prefix=tikz/, optimize command away=\includepdf]
+\tikzexternalize[prefix=tikz/]
 \usetikzlibrary{patterns} % libreria per disegnare i pattern
 %\tikzset{prefix={tikz/}}
-
+\usepackage{pstricks-add}
 
 \usepackage{caption}
 \usepackage{subcaption}

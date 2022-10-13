@@ -184,11 +184,12 @@ c_k = \frac{1}{T_0}\int_{T_0} A\cdot rep_{T_0}\{P_\tau(t)\}e^{-j2\pi k f_0 t} dt
 $$
 un intervallo comodo sarà proprio quello centrato nell'origine $[-T_0/2,
 T_0/2]$, il treno d'impulsi sarà nullo in gran parte dell'intervallo e non
-nullo solo nell'intervallo $[-\tau/2,\tau/2]$ dunque l'integrale sarà ristretto
+nullo solo nell'intervallo $[-\tau/2,\ \tau/2]$ con $\tau<T_0$ dunque
+l'integrale sarà ristretto
 a questo sotto-intervallo
 $$
 c_k = \frac{1}{T_0}\int_{-\tau/2}^{\tau/2} A\cdot e^{-j2\pi k f_0 t}dt =
-\left.\frac{A}{\cancel{T_0}  (-j2\pi kf_0)} e^{-j 2\pi k\cancel{f_0}t}
+\left.\frac{A}{\cancel{T_0}  (-j2\pi k\cancel{f_0})} e^{-j 2\pi kf_0t}
 \right|_{-\tau/2}^{\tau/2} = \frac{A}{j2\pi k } \left( -e^{-j\pi kf_0 \tau} +
 e^{+j\pi kf_0 \tau}
 \right)
@@ -206,6 +207,22 @@ $$
 $$
 è una funzione oscillante pari con un inviluppo di tipo iperbolico,
 %Inserisci grafico SINC
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+    \begin{axis}[
+    axis lines = middle,
+    ytick = {0,1},
+    xtick = {-6,-5,...,6},
+ %   xticklabels = {$-\pi$},
+    ymax = 1.1,
+    ]
+      \addplot[domain=-4:4,samples=200]{sin(deg(pi*x))/(pi*x)};
+     % \addplot[domain=-6:6,samples=200]{1/pi/x};
+     % \addplot[domain=-6:6,samples=200]{-1/pi/x};
+    \end{axis}
+  \end{tikzpicture}
+\end{figure}
 è un segnale di energia data la sua natura convergente all'infinito.
 
 In questo caso i coefficienti $c_k$ corrispondono a punti sul grafico della
