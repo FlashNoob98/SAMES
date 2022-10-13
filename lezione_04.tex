@@ -218,10 +218,11 @@ $$
     ymax = 1.1,
     ]
       \addplot[domain=-4:4,samples=200]{sin(deg(pi*x))/(pi*x)};
-     % \addplot[domain=-6:6,samples=200]{1/pi/x};
+      \addplot[domain=0.1:4,samples=200,grey]{1/pi/x};
      % \addplot[domain=-6:6,samples=200]{-1/pi/x};
     \end{axis}
   \end{tikzpicture}
+  \caption{Funzione sinc(x)}
 \end{figure}
 è un segnale di energia data la sua natura convergente all'infinito.
 
