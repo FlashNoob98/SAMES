@@ -1,0 +1,139 @@
+\chapter{Teorema del campionamento uniforme}
+
+Se $s(t)$ è un segnale a banda limitata, detto $S(f)$ lo spettro del segnale,
+se il segnale è a banda limitata $B$ allora
+$$
+S(f) = 0 \ \forall|f| > B
+$$
+
+Se la frequenza di campionamento è maggiore di $2B$ allora è possibile
+ricostruire fedelmente la $s(t)$ andando ad interpolare i campioni
+e la formula di ricostruzione è la seguente
+$$
+s(t) = \kinfsum s(k) \text{sinc}(f_st-k)
+$$
+
+
+Si raccoglie un numero discreto di campioni nell'intervallo di tempo a distanza
+$T_s$
+
+\section{Dimostrazione}
+Si riprende il discorso tra il rapporto tra campionamento e replicazione, nel
+dominio del tempo sia un segnale
+$$
+s(t) \cdot \kinfsum \delta(t - kT_s)
+$$
+nel dominio della frequenza si ha la replicazione del segnale originario
+$$
+S(f) \ast f_s \kinfsum \delta(f-kf_s))
+$$
+
+Nelle repliche del segnale nel dominio della frequenza si avranno degli
+``alias'' a distanze multiple di $f_s$, il cui supporto sarà ampio proprio
+$2B$, di conseguenza avendo $f_s>2B$ si garantisce la non intersezione tra le
+diverse repliche del segnale, altrimenti si avrebbe il cosiddetto fenomeno
+dell'aliasing o dell'interferenza tra le repliche, di conseguenza il segnale
+non potrà essere ricostruito a partire dai suoi campioni.
+
+
+
+Sia dato un segnale campionato $s(k)$ allora si potrà ottenere il segnale
+$s(t)$ andando ad antitrasformare lo spettro del segnale campionato
+$$
+s(t) = F^{-1} [ f_s \kinfsum S(f-kf_s)\cdot \frac{1}{f_s} \text{rect}_{f_s}(f)
+](t)
+$$
+
+dove $\text{rect}_{f_s}$ è una finestra rettangolare di guadagno uniforme e di
+ampiezza $f_s$, per compensare il fattore di guadagno prodotto dall'operazione
+di campionamento.
+
+Applicando la regola del prodotto di convoluzione all'interno della trasformata
+$$
+s(t) = F^{-1} [ f_s \kinfsum S(f-kf_s) ](t) \ast F^{-1} [ \frac{1}{f_s}
+\text{rect}_{f_s}(f)
+](t)
+$$
+
+Il primo termine è il campionamento del segnale, ossia
+$$
+s(t)\cdot \kinfsum\delta(t-kT_s) \Rightarrow \sum_{n=-\infty}^{+\infty} s(n)
+\delta(t-nT_s)
+$$
+il secondo è la sinc$(f_sT)$, svolgendo la convoluzione si ricava
+$$\begin{aligned}
+s(t) &= \infint \sum_{n=-\infty}^{+\infty} s(n) \delta(\tau - nT_s) \cdot
+\text{sinc}(f_s(t-\tau))d\tau = \\
+&= \sum_{-\infty}^{+\infty} \delta(\tau - nT_s) \text{sinc}(f_s(t-\tau))d\tau
+=\\
+&= \sum_{n=-\infty}^{+\infty}
+\end{aligned}
+$$
+
+
+$$\begin{aligned}
+&A\text{rect}_T(t) \stackrel{F}{\longrightarrow} AT\text{sinc}(fT)\\
+&AB\text{sinc}(Bt)
+\stackrel{\stackrel{F}{\longrightarrow}}{\stackrel{\longleftarrow}{F^{-1}}}
+A\text{rect}_B(f)
+\end{aligned}$$
+
+
+\section{Trasformazione di Hilbert}
+Si effettua una trasformazione dallo spettro reale allo spettro Hermitiano
+rispettando le seguenti regole di simmetria
+$$\begin{aligned}
+|S(f)| = |S(-f)| \\
+\angle S(f) = -\angle S(-f)
+\end{aligned}$$
+
+Lo spettro $S(f)$ contiene infatti informazioni ridondanti, possono essere
+eliminate se si elimina il contenuto spettrale sull'asse negativo, si ipotizza
+ad esempio di moltiplicare lo spettro reale per una funzione gradino al fine di
+ottenere la rappresentazione monolatera
+$$
+\tilde{S}(f) = 2S(f)1(f)
+$$
+il termine 2 compensa l'energia rimossa dal segnale nella rappresentazione
+bilatera.
+
+La funzione di Heaviside è così definita
+$$
+1(f) = \begin{cases}
+1 \text{ per } f> 0 \\
+\frac{1}{2} \text{ per } f=0\\
+0 \text{ per } f<0
+\end{cases}
+$$
+oppure con il seguente limite
+$$
+1(f) = \lim_{\varepsilon\to0} \left[ \frac{1}{2} + G_\varepsilon(f) \right]
+$$
+
+La rappresentazione analitica nel tempo della funzione di Heaviside
+$$
+\tilde{s}(t) = F^{-1} [ 2S(f)1(f) ](t) = 2s(t) \ast F^{-1}[1(f)](t)
+$$
+si svolge l'antitrasformata
+$$
+F^{-1} 1(f)](t) = F^{-1}\left[ \frac{1}{2} \right](t) +  \lim_{\varepsilon \to
+0}F^{-1}[G_\varepsilon (f)] (t)
+$$
+la derivata di $G_\varepsilon$ sarà:
+$$
+G'_\varepsilon (f) = \frac{1}{2\varepsilon} \text{rect}_\varepsilon(f)
+$$
+$$\begin{aligned}
+G'_\varepsilon(f) &= \frac{d}{df} G_\varepsilon(f) = \frac{d}{df} \left(
+g_\varepsilon(t) e^{-2\pi ft} dt \right) = \\
+&\infint
+g_\varepsilon(t) \frac{\partial}{\partial f} \left( e^{-j2\pi ft} \right)dt =
+\infint \left[ -j2\pi ft g_\varepsilon(t) \right]e^{-j2\pi ft} dt
+\end{aligned}$$
+
+$$
+G'_\varepsilon (f) \stackrel{F^{-1}}{\longrightarrow} -j2\pi t g_\varepsilon(t)
+$$
+$$
+\frac{d}{df} \stackrel{F^{-1}}{\longrightarrow} -j2\pi t
+$$
