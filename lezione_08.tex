@@ -1,0 +1,31 @@
+
+\section{Filtro di Hilbert}
+Non attenua le altre frequenze
+
+
+
+Vabbè rivediti la lezione registrata
+
+
+\section{Segnali a tempo continuo}
+Quando si opera con dei segnali e si vuole valutare gli effetti di un filtro,
+si valuta l'uscita del filtro, si considera un segnale $s(t)$ e si misura
+l'uscia al filtro, si può misurare il segnale però solo in un tempo limitato
+$T$, dunque dato un segnale ad esempio coseno, non osservo il segnale coseno ma
+il segnale coseno moltiplicato per la ``$\text{rect}_T$'', il fatto che il
+segnale si osservi per un intervallo di durata finita $T$ ma il segnale è
+definito per tutto l'asse dei tempi, allora nella analisi il segnale in esame
+sarà solo una porzione del segnale originale, bisogna tener conto di un
+``fattore finestra'' per rendicontare che si osserva il segnale per un tempo
+finito.
+
+Trasformando secondo Fourier si ottiene uno spettro pari alla trasformata del
+primo fattore convoluto la trasformata del secondo
+$$
+&F[A\cos(2\pi f_0 t) \ast F[\text{rect}_T(t)](f) = \\
+&=\frac{A}{2}[\delta(f-f_0) + \delta(f+f_0)] \ast T\text{sinc}(fT) = \\
+&= \frac{AT}{2} \text{sinc}((f-f_0)T) + \frac{AT}{2} .....
+$$
+
+
+
