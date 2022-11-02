@@ -71,7 +71,7 @@ $$
 Vanno analizzate le caratteristiche nel dominio della frequenza, si svolge la
 trasformata di Fourier:
 $$\begin{aligned}
-H(f) &= \intinf h(t) e^{-j2\pi ft} dt = \int_0^T
+H(f) &= \infint h(t) e^{-j2\pi ft} dt = \int_0^T
 \left(\frac{1}{2}-\frac{1}{2}\left( \frac{e^{j\frac{2\pi}{T}t}
 +e^{-j\frac{2\pi}{T}t}}{2} \right) \right)e^{-j2\pi ft} dt =\\
 & = \int_0^T \frac{1}{2}e^{-j2\pi ft} dt = \left.\frac{1}{(-j2\pi f)2}e^{-j2\pi
@@ -79,7 +79,7 @@ ft} \right|_0^T = \frac{1}{2\pi f} \frac{e^{-j2\pi fT} -1}{-2j} =\\
 &= \frac{1}{2\pi f} e^{-j\pi fT} \left( \frac{e^{j\pi f T}-e^{-j\pi f T}}{2j}
 \right) = \frac{1}{2\pi f}e^{-j\pi fT} \sin(\pi f T) = \frac{T}{2} e^{-j\pi f
 T} \text{sinc}(fT) \\
-&- \int_0^T \frac{1}{4} e^{j\frac{2\pi}{T}t e^{-j2\pi ft}dt = -\frac{1}{4}
+&- \int_0^T \frac{1}{4} e^{j\frac{2\pi}{T}t} e^{-j2\pi ft}dt = -\frac{1}{4}
 \int_0^T e^{-j2\pi (f-\frac{1}{T})t} dt
 \end{aligned}
 $$
