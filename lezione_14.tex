@@ -1,0 +1,153 @@
+
+\section{ARMA}
+Elaborazione a media mobile autoregressivo, in un sistema autoregressivo,
+l'uscita risente della sollecitazione all'istante corrente, dunque $x(n)=a_0
+x(n)$
+
+Un sistema a media mobile MA si descrive con
+$$
+y(n) + b_1y(n-1) + \dots + b_My(n-M) = a_0 x(n) + \dots + a_n x(n-M)
+$$
+Un sistema AR invece
+$$
+y(n) = a_0 x(nn) - b_1y(n-1) + \dots + b_My(n-M)
+$$
+
+
+È utile utilizzare la Z-trasformata
+$$
+X(z) = \sum_{n=0}^{\infty} x(n)z^{-n}
+$$
+per segnale causale tale che per $n<0 \rightarrow x(n)=0$.
+
+La Z-transform trasforma l'elemento di ritardo in una moltiplicazione algebrica,
+è facile dimostrare che
+$$
+Z[x(n-L)](z) = z^{-L}X(z)
+$$
+dim:
+$$
+Z[x(n-L)] = \sum_{n=0}^{+\infty} x(n-L)z^{-n} = \{l=n-L\} =
+\sum_{l=-L}^{+\infty} x(l) z^{-(l+L)} \stackrel{\text{causalità}}{=}
+z^{-L}\sum_{l=0}^{\infty}x(l)z^{-l} = Z^{-L}X(z)
+$$
+
+Applicando la trasformata al segnale ARMA
+$$
+Y(z)(1+b_1z^{-1} + \dots + b_Mz^{-M}) = X(z)(a_0+a_zZ^{-1} + \dots + a_nz{-N})
+$$
+Dunque si ricava facilmente la funzione di trasferimento di un sistema discreto
+eseguendo la divisione tra i due termini
+$$
+\frac{Y(z)}{X(z)} = \frac{a_0 + a_1z^{-1} + \dots + a_Nz^{-N}}{1 + b_1z^{-1} +
+\dots + b_Mz^{-M}}
+$$
+La funzione di trasferimento è rappresentata in una sua forma generale, è
+possibile utilizzare altre forme come la fattorizzata scomponendo il polinomio
+in prodotto di zeri e poli.
+È una funzione olomorfa, razionale fratta e regolare in un intervallo del piano
+complesso.
+
+La Z-trasformata è biunivoca, si può ottenere la funzione di partenza eseguendo
+l'integrale su un circuito chiuso
+$$
+x(n) = \frac{1}{2\pi j} \oint X(z)z^{n-1}dz
+$$
+
+Sia $\Omega \subseteq \mathbf{C},\ z_z \in \Omega$ il dominio $\Omega$
+regolare in $C$ allora
+$$
+f(z) = \sum_{n=0}^{\infty} c_n(z-z_0)^n
+$$
+In campo complesso una funzione è olomorfa se è analitica e viceversa.
+
+Si vuole conoscere il valore di una funzione in un punto $z_0$, esso sarà
+l'integrale lungo un circuito chiuso $C(z_0)$ che circonda il punto $z_0$
+$$
+f(z_0) = \frac{1}{2\pi j} \oint_{C(z_0)} \frac{f(z)}{z-z_0} dz
+$$
+
+
+Se la funzione dovesse presentare dei punti di discontinuità (ad es in $z_0$)
+allora vale il seguente risultato: la funzione avrà una parte olomorfa e una
+parte formata ancora da una serie con esponenti negativi
+$$
+f(z) = \sum_{n=9}^{+\infty} c_n(z-z_0)^n + \sum_{n=1}^{+\infty}
+c_{-n}(z-z_0)^{-n} = \sum_{n=-\infty}^{+\infty} c_n(z-z_0)^n
+$$
+Se il punto $z_0$ coincide con l'origine allora la funzione sarà
+la serie di Laurent
+$$
+f(z) = \sum_{n=-\infty}^{+\infty} c_nz^n
+$$
+
+Valutando la \ref{integrale} in un punto di discontinuità, non si otterrà il
+valore della funzione, non definita in quel punto ma un valore comunque finito,
+per semplicità si svolge l'esempuo di una funzione olomorfa in $C$ tranne che
+nell'origine
+$$
+\frac{1}{2\pi j} \oint_{C_1(0)} \frac{f(z)}{z} dz = c_0
+$$
+Si ottiene proprio il coefficiente della serie di Laurent, sostituendo la serie
+nell'integrale
+$$
+\frac{1}{2\pi j} \int \frac{\sum_{n=-\infty}^{+\infty} c_nz^n}{z}dz \dots
+$$
+È comodo parametrizzare il circuito $C_1(0): z=e^{j2\pi \nu}$ con $\nu\in [0,1[$
+mentre il differenziale diventa $dz = d(e^{j2\pi \nu} = j2\pi e^{j2\pi \nu}
+d\nu $
+$$\begin{aligned}
+\dots &= \frac{1}{\cancel{2\pi j}} \sum_{n=-\infty}^{+\infty} c_n \int_0^1
+\frac{e^2\pi j\nu n}{\cancel{e^2\pi j \nu}} \cdot \cancel{2\pi
+j}\cancel{e^{2\pi j }} d\nu = \sum_{n=-\infty}^{+\infty} c_n \int_0^1 e^{2\pi j
+\nu} d\nu = \\
+&= \begin{cases}
+\text{se } n = 0 \rightarrow \int_0^1d\nu = 1 \\
+\text{se } n\neq0 \rightarrow 0
+\end{cases}
+\end{aligned}
+$$
+
+
+Facciamo i calcoli $:)$
+$$
+\frac{1}{2\pi j} \oint_{C_1(0)} f(z) z^{m-1} dz = c_{-m}
+$$
+$$
+\frac{1}{\cancel{2\pi j} } \sum_{n=-\infty}^{+\infty} c_n \int_0^1
+e^{j2\pi\nu(n+m\cancel{-1})}\cancel{2\pi j}\cdot \cancel{e^{2\pi j \nu}}d\nu =
+\sum_{n=-\infty}^{+\infty}c_n\delta(n+m)
+$$
+in questo caso si ottiene la Delta di ``kronekker'', si dice che ``campiona''
+in $-m$.
+
+Dunque i termini della trasformata, i valori della funzione nella trasformata
+??? sono proprio i coefficienti della parte non olomorfa della funzione
+$$
+X(z) = \sum_{n=0}^{\infty} x(n)z^{-n} = \sum_{n=0}^{\infty} c_{-n}z^{-n}
+$$
+Se si svolge l'integrale di un circuito che circonda lo zero si ottengono
+dunque proprio i coefficienti della sequenza, questo giustifica la biunivocità
+della trasformazione e la formula per ottenere i coefficienti
+$$
+x(n) = \frac{1}{2\pi j} \oint_{c(0)} X(z)z^{n-1} dz
+$$
+
+Se si esegue la FT su una sequenza in funzione di $\nu$ per recuperare i
+coefficienti $x(n)$, ossia ricostruire la sequenza a partire dalla sua
+trasformata
+$$
+X(\nu) = \sum_{n=0}^{+\infty} x(n) e^{-j2\pi \nu n}
+$$
+allora
+$$
+x(n) = \int_0^1 X(\nu) e^{j2\pi \nu n} d\nu}
+$$
+
+$$
+X(\nu) = \left.X(z)\right|_{z=e^{j2\pi \nu}}
+$$
+è possibile sostituire questa posizione e ricavare la precedente.
+
+
+
