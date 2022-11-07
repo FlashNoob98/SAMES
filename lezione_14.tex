@@ -141,7 +141,7 @@ X(\nu) = \sum_{n=0}^{+\infty} x(n) e^{-j2\pi \nu n}
 $$
 allora
 $$
-x(n) = \int_0^1 X(\nu) e^{j2\pi \nu n} d\nu}
+x(n) = \int_0^1 X(\nu) e^{j2\pi \nu n} d\nu
 $$
 
 $$
@@ -150,4 +150,80 @@ $$
 è possibile sostituire questa posizione e ricavare la precedente.
 
 
+\section{Costi del calcolo della DFT}
+Si ricorda la definizione di DFT su N punti
+$$
+X(k) = \sum_{n=0}^{N-1}x(n)e^{-j\frac{2\pi}{N}kn},\ k = 0,\dots,N-1
+$$
+è un'operazione vettoriale, si moltiplica ogni termine $x(n)$ per un numero
+complesso, la moltiplicazione si scompone in almeno quattro termini.
+Si supponga un processore con una frequenza di clock di 1GHz, si supponga che
+per realizzare una moltiplicazione tra addendi complessi si impieghi un certo
+tempo ad esempio $10nS$.
+Devono essere eseguite $n$ operazioni complesse per ogni valore di $k$, si
+stanno trascurando i costi della somma e altri costi computazionali minori.
+Si eseguiranno $N^2$ operazioni complesse, ad esempio con un brano di 100.000
+punti, allora $N^2$ sarà pari a $10^10$ ossia 10 miliardi di operazioni
+elementari, il tempo necessario sarà pari a
+$$
+10^10 \cdot 10nS = 10^11 nS = 10^11 \cdot 10^-9 = 100s
+$$
+
+L'algoritmo DFT può essere implementato in maniera efficiente mediante una sua
+variante denominata FFT (FastFourierTransform) che permette di eseguire un
+numero pari a $n\cdot\log_2(N)$, nell'esempio precedente con $10^6$ campioni si
+avrà un tempo pari a
+$$
+10^6\log_2(10^6) = 20 * 10^6 * 10nS = 200 mS
+$$
+L'algoritmo di FFT produce lo stesso identico risultato della DFT ma
+nell'esecuzione del calcolo si nota una ridondanza che viene eliminata dalla
+FFT.
+
+Si introduce la seguente definizione
+$$
+W_N = e^{j\frac{2\pi}{N}}; X(k) = \sum_{n=0}^{N-1} x(n) W_N^{-kn},\
+k=0,\dots,N-1
+$$
+dunque
+$$
+X(k) = \sum_{n=0}^{\frac{N}{2}-1}x(2n) W_N^{-k2n} + \sum_{n=0}^{\frac{N}{2}-1}
+x(2n+1)W_N^{-k(2n+1)},\ k=0,\dots,N-1
+$$
+Si è divisa la sommatoria in termini pari e dispari.
+
+Con un cambio di notazione si pone il 2 al denominatore della $N$.
+
+$$
+x(k) = \sigma_{n=0}^{\frac{N}{2}-1} x_p(n) W_{\frac{N}{2}}^{-kn} +
+W_N^{-K}\sum_{n=0}^{\frac{N}{2}-1}x_D(n) W_{\frac{N}{2}}^{-kn},\ k=0,\dots,N-1
+$$
+Dunque il primo termine è proprio una DFT su $N/2$ punti, allo stesso modo il
+secondo termine con coefficienti dispari.
+
+Se si divide la sequenza $x(n)$ nella sottosequenza pari e in quella dispari,
+si può parallelizzare il processo, avendo il calcolo di due DFT su $N/2$ punti
+in contemporanea.
+
+Il coefficiente $W_N^{-k} = e^{-j\frac{2\pi}{N}k}$ è un fasore, per
+$k\in[0,N/2]$ si sposta nel primo e secondo quadrante del piano complesso.
+Viceversa $W_N^{-\left(\frac{N}{2}-1\right)} = -W_N^{-1}$.
+Dunque per ottenere i primi $N/2-1$ valori della sequenza si moltiplica la DFT
+dei termini pari per i termini dispari moltiplicati per $W_N^{-kn}$, per
+calcolare invece i termini per $n\in[N/2, N-1]$ si moltiplicano per $-1$ i
+termini dispari e sottratti a quelli pari.
+
+
+%Qui manca qualcosa
+Si può dunque lavorare su quattro sottosequenze con ovvia notazione $x_{pp},
+x_{pp}, x_{dp}, x_{dd}$.
+Si possono eseguire quattro DFT su blocchi con $N/4$ punti, con il grafo
+identico al precedente.
+
+Si supponga di avere $N=8$ dunque 8 linee, quindi 3 stadi di calcolo
+$\log_2(8)=3$
+Lo schema di calcolo detto a ``farfalla'' è sempre dello stesso tipo.
+
+Il riordinamento dei campioni viene effettuato mediante la regola del
+bit-reverse 100>001, 110>011 eccetera...
 
