@@ -1,0 +1,202 @@
+
+\section{Tecniche di regressione lineare}
+
+
+Vengono utilizzate per identificare i parametri di un modello per descrivere la
+distribuzione di dati sperimentali, ad esempio durante la taratura di uno
+strumento di misura o di una sua parte più semplice. SI applicano degli
+ingressi noti $x_1,x_2...$ e si registrano le uscite in corrispondenza degli
+ingressi noti.
+Solitamente si desidera avere un comportamento lineare di un trasduttore in
+fase di costruzione, la taratura è un procedimento che avviene a valle, detto
+anche procedimento metrologico, serve a verificare se il trasduttore rispetta
+la curva di costruzione desiderata.
+
+Per ogni punto misurato è possibile utilizzzare un'equazione lineare che
+passante per la coppia di punti $(x_k,y_k),$ vanno dunque identificati i due
+parametri $a$ e $b$ che meglio ``fittano'' e producono il miglior adattamento
+ai dati sperimentali
+$$
+y_k = ax_k + b
+$$
+
+Il miglior adattamento è quello che individua i termini $a$ e $b$ tali che si
+minimizzi la somma dei quadrati degli scarti (scarto quadratico medio).
+$$
+min\{\sum_{k}\varepsilon_k^2\}
+$$
+
+Per trovare la soluzione al problema è comodo utilizzare un formalismo
+vettoriale, si definisce con $\bar{y}$ il vettore colonna dei valori $y_M$
+misurati.
+Ci sarà un vettore delle $\bar{x}$, un vettore degli scarti
+$\bar{\varepsilon}$, con il vettore $\bar{a}=(a,b)$ il vettore delle incognite.
+Il sistema in forma compatta diviene:
+$$
+\bar{y} = a\bar{x} + b\bar{1} + \bar{\varepsilon}
+$$
+
+Il vettore degli scarti è pari a
+$$
+\bar{\varepsilon} = \bar{y} - a\bar{x} - b\bar{1}
+$$
+
+$$
+\bar\varepsilon^T\cdot\bar{\varepsilon} =
+(\bar{y}-a\bar{x}-b\bar{1})^T\cdot(\bar{y}-a\bar{x}-b\bar{1}) = ... =
+\bar{y}\cdot\bar{y} -2a\bar{y}^T\cdot\bar{x} - 2b\bar{y}^T\bar{1} +
+a^2\bar{x}^T\bar{x} + 2ab\bar{x}^T\bar{1} + b^2\bar{1}^T\bar{1}
+$$
+
+Per trovare il minimo è necessario vedere in che punto le derivate parziali si
+annullano
+$$
+\partial_a \bar{\varepsilon}^T\bar\varepsilon = -2\bar{y}^T\bar{x} +
+2a\bar{x}^T\bar{x} + 2b\bar{x}^T\bar{1}
+$$
+$$
+\partial_b
+$$
+Accorpando le equazioni si ottiene la seguente
+$$
+\left[ x^Tx x^T\right]...
+$$
+
+
+Si definisce una matrice
+$\bar{\bar{X}}$
+
+Ho ottenuto un sistema di due equazioni in due incognite che mi riconduce ad
+una soluzione approssimata, la soluzione sarà
+$$
+\bar{a} = (\bar{\bar{X}}^T\cdot \bar{\bar{X}}^{-1}\cdot \bar\bar{{X}}^T \cdot
+\bar{y})
+$$
+La funzione costo è limitata inferiormente, se esiste un punto di
+stazionarietà, questo sarà un punto di minimo.
+
+Il fatto che il metodo della pseudoinversa produca una ssoluzione aopprossimata
+
+
+
+Esistono tecniche di regressione lineare multipla
+$$
+\bar{y} = a_0\bar{x}^n + a_1\bar{x}^{x-1} + \dots + a_{n-1}\bar{x} + a_n\bar{1}
++ \bar{\varepsilon}
+$$
+con la potenza di un vettore intesa come quel vettore che ha tutti i suoi
+elementi elevati a quella potenza.
+
+Si considera uno scarto per ogni coppia di osservazione, il vettore delle
+incognite sarà di $n+1$ elementi,
+$$
+\bar{\bar{X}} = (\bar{x}^n, \bar{x}^{n-1},\dots,1) = \begin{bmatrix}
+x_1^n & x_1^{n-1} & \dots &x_1 & 1 \\
+x_2^n & x_2^{n-1} & \dots & x_2 & 1 \\
+\vdots & \vdots & \vdots &\vdots & \vdots \\
+x_M^{n} & x_M^{n-1} & \dots & x_M & 1
+\end{bmatrix}
+$$
+
+Invertendo l'espressione precedente si ricava il vettore $\bar{\varepsilon}$
+$$
+\bar{\varepsilon} = \bar{y}-\bar{\bar{X}}\cdot\bar{a}
+$$
+Ancora la somma dei quadrati degli scarti
+$$
+\bar{\varepsilon}^T\bar{\varepsilon} =
+(\bar{y}-\bar{\bar{X}}\bar{a})^T\cdot(\bar{y}-\bar{\bar{X}}\bar{a}) =
+\bar{y}^T\bar{y} - \bar{y}^T\bar{\bar{X}}\bar{a} -
+(\bar{\bar{X}}\cdot\bar{a}^T\bar{y} = - (\bar{a}^T\bar{\bar{X}}^T\bar{y})^T =
+\bar{y}\bar{\bar{X}}\bar{a}
+$$
+Si scriverà un sistema di $n$ incognite
+$$\begin{cases}
+&\partial_{a_0}\{\bar{\varepsilon}^T\cdot \bar{\varepsilon}\} \\
+& \partial_{a_n}
+\end{cases} |
+$$
+
+Risultato:
+$$
+\begin{cases}
+-2\bar{\delta}-1^T
+\end{cases}
+$$
+
+
+I parametri sono solitamente detti regressori.
+
+\section{Sinusoidal fitting}
+Se si stimola un sistema con un ingresso di tipo sinusoidale,
+$$
+y_k = A\cos(2\pi f_0t_k - \phi) + C + \varepsilon_k
+$$
+
+si normalizza la frequenza di campionamento e $t_k = kT_s$
+$$
+y_k = A\cos (2\pi \nu_0 k - \phi) + C + \varepsilon_k
+$$
+
+Per le formule di addizione
+$$
+y_k = A\cos(2\pi\nu_0 k ) \sin(\phi) + A\sin(2\pi\nu_0 k) \cos\phi + C +
+\varepsilon_k\\
+y_k = A_0\cos(2\pi \nu_0 k) + B_0\sin(2\pi\nu_0 k ) + C_0 + \varepsilon_k
+$$
+
+$$
+\bar{y} = (y_1,\dots,y_m)^t
+$$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Il modello è comunque lineare nei parametri, anche se si utilizza una
+regressione non lineare.
+
+
+
+
+
+
+\subsection{Ancora regressione lineare}
+È utile investigare un sistema ed associargli un modello lineare per poter
+compensare gli errori di linearità che il sistema dovesse eventualmente
+includere. Ad esempio ogni sistema può essere visto come un amplificatore o un
+filtro, può introdurre due tipologie di errori:
+\begin{itemize}
+\item Offset: il sistema non è eccitato ma presenta comunque un'uscita
+\item Guadagno: il guadagno del sistema non è unitario, la pendenza della retta
+caratteristica non è pari a 45$\circ$
+\end{itemize}
+
+a partire dall'uscita si può ricavare l'ingresso mediante i parametri del
+modello lineare
+$$
+x = \frac{y-b}{a}
+$$
+
+Si descrive un certo comportamento polinomiale non lineare di un trasduttore,
+che ha comunque un andamento monotono, dunque invertibile.
+
+Sia dotta un modello di regressione in cui non si analizzano più le coppie
+$(x,y)$ ma $(y,x)$, si chiama diagramma di taratura la curva ottenuta
+riportando i dati nel seguente modo.
+$$
+x = b_0y^m + b_1y^{m-1} + \dots + b_m + \varepsilon
+$$
+Si trova il polinomio di grado al massimo $m$ che consente di elaborare
+l'uscita per ottenere l'ingresso.
+In forma analitica
+
+$$\begin{aligned}
+\bar{b} &= (b_0,\dots b_m)^T \\
+\bar{y} &= (y_1,\dots, \bar{y},1)^T\\
+\bar{x} = (x_1,\dots, x_m)^T
+\end{aligned}$$
+dunque
+$$
+\bar{\bar{Y}}\cdot\bar{b} = \bar{x} \rightarrow \bar{b} =
+(\bar{\bar{Y^T}}\cdot\bar{\bar{Y}})^{-1}\cdot\bar{\bar{Y^T}}\cdot \bar{x}
+$$
+
