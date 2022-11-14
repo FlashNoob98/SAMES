@@ -1,0 +1,103 @@
+
+Algoritmi di regressione linearizzati
+
+Si potrebbero avere dati che possono essere rappresentati da una legge
+esponenziale
+$$
+Y_k = Ae^{ax_k} + \varepsilon_k
+$$
+Sembra un problema non lineare per ricavare $A$ ed $a$ ma se si passa ai
+logaritmi
+$$
+\ln y_k = \ln(Ae^{ax_k}) = \ln A + ax_k
+$$
+
+Se il modello è invece del tipo
+$$y_k = A\sqrt{x_k + B} + \varepsilon_k
+$$
+eseguendo il quadrato
+$$
+y_k^2 = A^2(x_k + B) = A^2x_k + A^2B
+$$
+
+Spesso i problemi di regressione lineare non sono sostanziali, possono
+essere ricondotti a problemi lineari con semplici passaggi.
+
+Alcuni casi più ostici:
+$$
+y_k = \frac{ax_k + b}{x_k + c} + \varepsilon_k
+$$
+In questo caso non si trovano metodi per linearizzare direttamente la funzione.
+
+Assumendo
+$$
+x_k \neq -c
+$$
+allora $$
+x_ky_k + cy_k = ax_k + b
+$$
+$$
+ax_k + b - cy_k = x_ky_k
+$$
+
+Andrebbe aggiunto il termine di errore $\varepsilon_k(x_c + c) $, aumenterebbe
+all'aumentare dell'ingresso, di conseguenza questo approccio non funziona.
+
+
+\section{Sinusoidal fitting a quattro parametri}
+Si vogliono adattare i dati acquisiti ad un modello sinusoidale
+$$
+y = A_c\cos(2\pi\nu n) + B_0\sin(2\pi\nu 0) + C_0 + \varepsilon_n
+$$
+
+$$
+\bar{\bar{D_0}}\bar{x} = \bar{y} \rightarrow \bar{x} = (\bar{\bar{D_0}}^T
+\bar{\bar{D}}^{-1}\bar{\bar{D_0}}^T \bar{y}
+$$
+
+Si fissa un punto di riferimento
+$$
+\nu = \nu_0 \Rightarrow \hat{x_0}^T = (A_0,B_0,C_0)
+$$
+
+$$
+y = A_1\cos(2\pi\nu_0 n) + B_1\sin(2\pi\nu_0 n) + C_1 + 2\pi
+n(-A_0\sin(2\pi\nu_0 n) + B_0\cos(2\pi\nu_0 n))\Delta\nu_1
+$$
+
+$$
+\bar{\bar{D}}_1 \bar{x}_1 = \bar{y} \Rightarrow \bar{x}_1 =
+(\bar{\bar{D}}_1^T\bar{\bar{D}}_1)^{-1} \bar{\bar{D}}_1^T \bar{y}
+$$
+
+Si può iterare il procedimento e considerare i parametri con pedice 1 come i
+nuovi parametri di partenza per il calcolo di parametri più raffinati.
+
+La matrice $D_1$ ha la seguente forma
+$$
+\begin{bmatrix}
+\cos(2\pi\nu_0 1) & \sin(2\pi\nu_0 1) & 1 & (-2\pi1 A_0
+\sin(2\pi\nu_01)+2\pi1\cos(2\pi\nu_01))\\
+\vdots & \vdots & \vdots & \vdots \\
+\cos(2\pi\nu_0 M) & \sin(2\pi\nu_0 M ) & 1 & (-2\pi M A_0
+\sin(2\pi\nu_0 M)+2\pi M\cos(2\pi\nu_0 M))
+\end{bmatrix}
+$$
+La procedura è convergente, dunque le correzioni decrescono con le iterazioni.
+
+Questo metodo è una variante di Newton Rhapson, si dimostra essere convergente.
+
+
+
+Il fitting è molto buono al centro del brano nel punto in cui inizia
+l'algoritmo, se c'è un errore sulla frequenza questo si manifesta
+progressivamente allo scostarsi dal punto centrale, il vettore
+$\bar{\varepsilon} = \bar{y} - \bar{\bar{D_0}}\bar{x}$ si annulla nel punto
+centrale e tende ad aumentare gradualmente, quando questo vettore resta
+confinato in una fascia uniforme, allora si è eseguito un buon fitting.
+
+
+
+
+
+
