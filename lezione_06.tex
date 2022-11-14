@@ -1,0 +1,55 @@
+
+Si ricorda la rappresentazione dei segnali periodici
+$$
+\kinfsum  c_ke^{j2k\pi f_0 t} \stackrel{\mathcal{F}}{\longrightarrow} \kinfsum
+c_k \delta(f-kf_0)
+$$
+per ogni $k$ corrisponde uno spettro con modulo e fase pari al modulo e fase
+del coefficiente $c_k$.
+
+Si vuole ricavare la trasformata di Fourier del segnale coseno, si utilizza la
+rappresentazione di Eulero:
+$$
+A\cos (2\pi f_0 t + \phi) = \frac{A}{2} \left( e^{j2\pi f_0 t + \phi} +
+e^-{j2\pi f_0 t + \phi}\right)
+$$
+Trasformando si ottiene
+$$
+\frac{A}{2} \left( e^{j\phi} \delta(f-f_0) + e^{-j\phi}\delta(f+f_0) \right)
+$$
+
+Allo stesso modo per il seno
+$$
+A\sin(2\pi f_0 t) \stackrel{\mathcal{F}}{\longrightarrow}
+\frac{A}{2j}\left( \delta(f-f_0) - \delta(f+f_0)\right)
+$$
+
+
+Per un segnale periodico la potenza è definita
+$$
+P = \lim_{T\to \infty} \frac{1}{T} \int_{T/2}^{T/2} |x(t)|^2 dt = \sum_k |c_k|^2
+$$
+L'ultima è nota in letteratura come identità di Parseval.
+
+Allo stesso modo nel contesto dell'energia
+$$
+\epsilon_x = \infint |x|^2 dt = \infint |x(f)|^2 df
+$$
+lo stesso valore di energia può essere determinato nel dominio del segnale o
+dominio del tempo.
+
+
+
+
+
+
+\subsection{Convoluzione}
+L'operatore \textit{convoluzione} è un operatore di tipo prodotto che coinvolge
+due funzioni o due segnali o un segnale e una funzione.
+
+Siano $u(t)$ e $v(t)$ il prodotto di convoluzione è così definito
+\begin{equation}
+ (u\ast v) (t) \stackrel{\Delta}{=} \infint u(\tau)v(t-\tau)d\tau =
+\int_{+\infty}^{-\infty} v(t')u(t-t')(-dt') = \infint v(t')u(t-t') dt'
+\end{equation}
+con $t' = t-\tau$, $\tau = t-t'$ dunque $d\tau = -dt'$

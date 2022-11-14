@@ -1,0 +1,188 @@
+
+Algoritmi di regressione linearizzati
+
+Si potrebbero avere dati che possono essere rappresentati da una legge
+esponenziale
+$$
+Y_k = Ae^{ax_k} + \varepsilon_k
+$$
+Sembra un problema non lineare per ricavare $A$ ed $a$ ma se si passa ai
+logaritmi
+$$
+\ln y_k = \ln(Ae^{ax_k}) = \ln A + ax_k
+$$
+
+Se il modello è invece del tipo
+$$y_k = A\sqrt{x_k + B} + \varepsilon_k
+$$
+eseguendo il quadrato
+$$
+y_k^2 = A^2(x_k + B) = A^2x_k + A^2B
+$$
+
+Spesso i problemi di regressione lineare non sono sostanziali, possono
+essere ricondotti a problemi lineari con semplici passaggi.
+
+Alcuni casi più ostici:
+$$
+y_k = \frac{ax_k + b}{x_k + c} + \varepsilon_k
+$$
+In questo caso non si trovano metodi per linearizzare direttamente la funzione.
+
+Assumendo
+$$
+x_k \neq -c
+$$
+allora $$
+x_ky_k + cy_k = ax_k + b
+$$
+$$
+ax_k + b - cy_k = x_ky_k
+$$
+
+Andrebbe aggiunto il termine di errore $\varepsilon_k(x_c + c) $, aumenterebbe
+all'aumentare dell'ingresso, di conseguenza questo approccio non funziona.
+
+
+\section{Sinusoidal fitting a quattro parametri}
+Si vogliono adattare i dati acquisiti ad un modello sinusoidale
+$$
+y = A_c\cos(2\pi\nu n) + B_0\sin(2\pi\nu 0) + C_0 + \varepsilon_n
+$$
+
+$$
+\bar{\bar{D_0}}\bar{x} = \bar{y} \rightarrow \bar{x} = (\bar{\bar{D_0}}^T
+\bar{\bar{D}}^{-1}\bar{\bar{D_0}}^T \bar{y}
+$$
+
+Si fissa un punto di riferimento
+$$
+\nu = \nu_0 \Rightarrow \hat{x_0}^T = (A_0,B_0,C_0)
+$$
+
+$$
+y = A_1\cos(2\pi\nu_0 n) + B_1\sin(2\pi\nu_0 n) + C_1 + 2\pi
+n(-A_0\sin(2\pi\nu_0 n) + B_0\cos(2\pi\nu_0 n))\Delta\nu_1
+$$
+
+$$
+\bar{\bar{D}}_1 \bar{x}_1 = \bar{y} \Rightarrow \bar{x}_1 =
+(\bar{\bar{D}}_1^T\bar{\bar{D}}_1)^{-1} \bar{\bar{D}}_1^T \bar{y}
+$$
+
+Si può iterare il procedimento e considerare i parametri con pedice 1 come i
+nuovi parametri di partenza per il calcolo di parametri più raffinati.
+
+La matrice $D_1$ ha la seguente forma
+$$
+\begin{bmatrix}
+\cos(2\pi\nu_0 1) & \sin(2\pi\nu_0 1) & 1 & (-2\pi1 A_0
+\sin(2\pi\nu_01)+2\pi1\cos(2\pi\nu_01))\\
+\vdots & \vdots & \vdots & \vdots \\
+\cos(2\pi\nu_0 M) & \sin(2\pi\nu_0 M ) & 1 & (-2\pi M A_0
+\sin(2\pi\nu_0 M)+2\pi M\cos(2\pi\nu_0 M))
+\end{bmatrix}
+$$
+La procedura è convergente, dunque le correzioni decrescono con le iterazioni.
+
+Questo metodo è una variante di Newton Rhapson, si dimostra essere convergente.
+
+
+
+Il fitting è molto buono al centro del brano nel punto in cui inizia
+l'algoritmo, se c'è un errore sulla frequenza questo si manifesta
+progressivamente allo scostarsi dal punto centrale, il vettore
+$\bar{\varepsilon} = \bar{y} - \bar{\bar{D_0}}\bar{x}$ si annulla nel punto
+centrale e tende ad aumentare gradualmente, quando questo vettore resta
+confinato in una fascia uniforme, allora si è eseguito un buon fitting.
+
+\section{Algoritmo di Goërtzel}
+È un algoritmo di tipo autoregressivo, serve a stimare l'ampiezza di un segnale
+sinusoidale di frequenza approssimativamente nota, è come eseguire la DFT in un
+solo punto, anzichè eseguirla su tutto il segnale, elabora infatti il segnale
+in \textit{streaming}, analizzando punto per punto man mano che vengono
+acquisiti.
+$$
+y(n) = x(n) + e^{j2\pi \nu_0} y(n-1)
+$$
+Veniva utilizzato nel sistema telefonico per la trasmissione del numero,, in
+sistemi per segnalamento breve, nei sistemi denominati DTMF (Dual Tone Multi
+Frequency), in questi sistemi si definisce un alfabeto di simboli e a ciascun
+simbolo si associa una coppia di frequenze.
+\begin{table}[h]\centering
+\begin{tabular}{c | c | c| c| c}
+ $f_0$ &1209 &1336 & 1477 &1633 \\ \hline
+ 697 & 1 & 2 & 3 & A \\ \hline
+ 770 & 4 & 5 & 6 & B \\ \hline
+ 852 & 7 & 8 & 9 & C \\ \hline
+ 941 & $\textasteriskcentered$ & 0 & \# & D \\ \hline
+\end{tabular}
+\end{table}
+Per ogni numero è associata una coppia di frequenze che generano una sequenza
+di Burst con la loro sovrapposizione.
+
+L'algoritmo produce il valore della DFT della sequenza in corrispondenza di un
+certo BIN, il parametro $\nu_0$ è $\frac{l}{N}$, dopo una sequenza di $N+1$
+passi dunque
+$$
+y(N) = DFT_N\{x_(n)\}(l)
+$$
+
+$$
+y(n)  = x(n) + e^{j2\pi \nu_0} (x(n-1) + e^{j2\pi\nu_0}y(n-2))
+$$
+$$
+y(n) = x(n) + e^{j2\pi\nu_0}(x(n-1)+e^{j2\pi\nu_0}
+(x(n-2)+e^{j2\pi\nu_0}y(n-3)))
+$$
+$$\begin{aligned}
+y(n) &= \sum_{m=0}^{\infty}x(n-m)e^{j2\pi\nu_0 m} = \{l = n-m\} =
+\sum_{l=n}^{\cancel{-\infty}0}x(l)e^{j2\pi\nu_0(n-l)} = \\
+&=(\sum_{l=0}^{n} x(l)e^{-j2\pi\nu_0 l})e^{j2\pi\nu_0 n} \| y(N) =
+e^{j2\pi\frac{l}{N}N}\left( \sum_{l=0}^{N-1} x(l) e^{-j2\pi\nu_0 l} + X(N)\cdot
+1 \right)
+\end{aligned}$$
+
+Si dovrebbero eseguire dei prodotti tra numeri complessi, si preferisce
+interporre una variabile di stato eseguendo la trasformata $Z$
+$$\begin{aligned}
+Y(Z) &= X(Z) + e^{j2\pi\nu_0} Z^{-1} Y(Z) \\
+&(1-e^{j2\pi\nu_0} Z^{-1})Y(z) = X(z)
+\end{aligned}$$
+$$
+\frac{Y(Z)}{X(Z)} = \frac{1}{1-e^{j2\pi\nu_0 Z^{-1}}}\cdot
+\frac{1-e^{-j2\pi\nu_0}Z^{-1}}{1-e^{-j2\pi\nu_0}Z^{-1}} =
+\frac{1 - e^{-j2\pi\nu_0} Z^{-1}}{1-2\cos(2\pi\nu_0)Z^{-1} + Z^{-2}}
+$$
+La funzione di trasferimento del sistema può essere vista come
+$$
+\frac{Y(Z)}{X(Z)} = \frac{S(Z)}{X(Z)}\frac{Y(Z)}{S(Z)}  =
+\frac{1}{1-2\cos(2\pi\nu_0)Z^{-1} + Z^{-2}} (1-e^{-j2\pi\nu_0}Z^{-1})
+$$
+Si introduce la variabile di stato $s(n)$
+$$
+s(n) = x(n) + 2\cos(2\pi\nu_0)s(n-1) - s(n-2)
+$$
+
+$$
+y(N) = s(N) - e^{-j2\pi\nu_0}s(N-1)
+$$
+
+Le condizioni iniziali per la variabile sono
+$$
+\begin{cases}
+s(-1) = 0 \\
+s(-2) = 0
+\end{cases}
+$$
+Così facendo non bisogna implementare l'aritmetica dei numeri complessi ma si
+lavora solo con numeri reali.
+
+Infine ci si interessa al modulo quadro di $y(n)$
+$$
+|y(N)|^2 = y(N)y^*(N) = \left(s(N)-e^{-j2\pi\nu_0}s(n-1)\right)(s(N) -
+e^{j2\pi\nu_0}s(N-1)) = s(N) + s(N-1) - 2\cos(2\pi\nu_0)s(N)s(N-1)
+$$
+
+
+

@@ -1,0 +1,133 @@
+
+\section{Analisi spettrale di segnali a tempo discreto}
+Mediante l'utilizzo della DFT, i risultati ottenuti a causa del fenomeno della
+\textit{dispersione spettrale} possono indurre delle stime di parametri di
+frequenza e ampiezza delle singole componenti viziate da errore di
+polarizzazione per la stima di frequenza e scallop loss per la stima di
+ampiezza.
+
+Riguardo la polarizzazione esiste un approccio teorico mediante l'algoritmo di
+Buleman che permette di compensare l'errore, la correzione è corretta se il
+segnale contienne una sola riga spettrale. Nel caso reale nessun segnale è mai
+composto da una sola frequenza, dunque tale algoritmo dà spesso risultati
+insufficienti nel caso pratico.
+
+La polarizzazione può essere ridotta se si utilizza un algoritmo empirico che
+svolge una media pesata dei bin nell'intorno del picco relativo.
+
+Per compensare l'errore di scallop loss invece si utilizzano varie soluzioni,
+riferite tipicamente come \textbf{finestratura}, l'analisi si svolgerà
+nuovamente mediante la variabile a tempo continuo e poi applicata a quelle a
+tempo discreto, preso il segnale $x(t)$ questo viene moltiplicato per una
+finestra $w(t)$, tale operazione era stata svolta per descrivere l'osservazione
+di un segnale in un intervallo finito.
+
+$$
+x(t)\cdot w(t) = x(t)\cdot \text{rect}_T(t)
+$$
+
+Il fatto che nell'analisi si abbia una finestra rettangolare fa sì che la
+dispersione spettrale assuma particolari connotati, nell'analisi condotta il
+segnale era di tipo coseno, descritto utilizzando le formule di Eulero, lo
+spettro del segnale consisteva in una riga a frequenza $+f_0$ ed una a
+frequenza $-f_0$. L'operazione di finestratura, con la finestra rettangolare
+generava uno spettro a lobi, il parametro $T$, ampiezza della finestratura, era
+inversamente proporzionale dall'ampiezza dei lobi.
+
+Va considerato lo spettro che si ottiene mediante il prodotto di convoluzione
+dello spettro del segnale e della trasformata di Fourier nel dominio della
+frequenza della funzione rettangolare, pari alla sinc$(fT)$.
+
+La dispersione spettrale dipende dal tipo di finestra, si potrebbe introdurre
+una finestra esplicita per interpretare i dati nel modo in cui lo spettro del
+segnale viene pesato introducendo dei coefficienti di peso, o condizionati
+tramite una finestra esplicita.
+
+Scegliendo una finestra differente dalla funzione rettangolare si può ridurre
+l'errore di scallop loss, ad esempio una finestra con una forma spettrale
+caratterizzata da un lobo con una ``testa più piatta'' permette di ottenere una
+pari amplificazione per un intervallo più ampio di frequenze nell'intorno di
+$f_0$, in caso di campionamento non coerente no si commette un errore della
+stessa entità che si commetterebbe senza utilizzare questo tipo di finestratura.
+
+Si consideri la seguente finestra:
+$$W(t) =\begin{cases}
+ & \frac{1}{2} - \frac{1}{2}\cos(2\pi \frac{t}{T})\ \text{per } 0<t<T\\
+&0 \ \text{per } t<0 \text{ oppure } t>T
+\end{cases}
+$$
+%Inserisci grafico funzione
+
+Questa finestra pesa maggiormente i valori al centro della finestra di
+osservazione, dando meno rilievo ai valori alle estremità della finestra,
+prende il nome dello studioso che la introdusse nell'analisi spettrale,
+chiamata \textit{Finestra di Hanning}, rappresentabile con $h(t)$, in forma
+compatta si può scrivere con
+$$
+h(t) = \left(\frac{1}{2}-\frac{1}{2}\cos\left( 2\pi \frac{t}{T}
+\right)\right)\cdot \text{rect}_T\left(t-\frac{T}{2}\right)
+$$
+
+Vanno analizzate le caratteristiche nel dominio della frequenza, si svolge la
+trasformata di Fourier:
+$$\begin{aligned}
+H(f) &= \infint h(t) e^{-j2\pi ft} dt = \int_0^T
+\left(\frac{1}{2}-\frac{1}{2}\left( \frac{e^{j\frac{2\pi}{T}t}
++e^{-j\frac{2\pi}{T}t}}{2} \right) \right)e^{-j2\pi ft} dt =\\
+& = \int_0^T \frac{1}{2}e^{-j2\pi ft} dt = \left.\frac{1}{(-j2\pi f)2}e^{-j2\pi
+ft} \right|_0^T = \frac{1}{2\pi f} \frac{e^{-j2\pi fT} -1}{-2j} =\\
+&= \frac{1}{2\pi f} e^{-j\pi fT} \left( \frac{e^{j\pi f T}-e^{-j\pi f T}}{2j}
+\right) = \frac{1}{2\pi f}e^{-j\pi fT} \sin(\pi f T) = \frac{T}{2} e^{-j\pi f
+T} \text{sinc}(fT) \\
+&- \int_0^T \frac{1}{4} e^{j\frac{2\pi}{T}t} e^{-j2\pi ft}dt = -\frac{1}{4}
+\int_0^T e^{-j2\pi (f-\frac{1}{T})t} dt
+\end{aligned}
+$$
+
+raggruppando entrambi i termini si ricava
+$$
+H(f) = \frac{T}{2}e^{-j\pi fT}\text{sinc}(fT) - \frac{T}{4} e^{-j\pi
+(f-\frac{1}{T})}\text{sinc}(f+\frac{1}{T})T) %RIVEDIIIIII
+$$
+
+Si confrontano le due caratteristiche spettrali di entrambe le finestre
+%38:40
+
+
+La finestra di Hanning ha le caratteristiche spettrali ricercate, dati i
+termini aggiuntivi infatti, si è generato uno schema di interferenza per cui i
+lobi secondari diventano meno importanti, la potenza del segnale viene comunque
+dispersa ma è dispersa nell'intorno della frequenza centrale, si è peggiorata
+la dispersione a banda stretta ma migliorando notevolmente la dispersione a
+banda larga.
+
+%52:00
+
+%%Pausa
+
+
+Se il segale $X(f)$ viene campionato, e se è campionato ``bene'', allora il
+segnale avrà uno spettro che sarà una versione ``periodicizzata'' dello spettro
+del segnale originale, effettuando una operazione di scalatura, si otterrebbe
+lo spettro ottenibile a partire dalla frequenza di campioni prelevata  da
+quella frequenza di campionamento.
+
+
+%%%
+
+
+%%
+
+\section{Zero padding}
+Il costo che si paga per eseguire lo zero padding è un costo puramente
+computazionale, eseguire tale operazione significa che acquisito un segnale
+discreto, ovvero una sequenza N-esima di valori, si può prolungare la sequenza
+con degli zeri, ottenendo una sequenza più lunga, prolungando il segnale senza
+alterarlo.
+
+Investigando le caratteristiche spettrali del segnale si ottiene l'effetto di
+avere una funzione periodica tra 0 ed 1.
+
+
+
+

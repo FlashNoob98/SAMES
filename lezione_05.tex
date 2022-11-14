@@ -1,0 +1,203 @@
+
+La rappresentazione spettrale è equipollente alla rappresentazione alternativa
+che sarebbe possibile fornire con la rappresentazione analitica.
+
+La rappresentazione più comune è quella mediante l'utilizzo degli spettri, in
+ampiezza e fase, l'ampiezza si assume convenzionalmente positiva, un'eventuale
+inversione di segno viene riportata nello spettro delle fasi.
+
+Per un segnale periodico sussiste la seguente rappresentazione a coefficienti
+complessi
+$$
+x(t) = \kinfsum c_k e^{j 2\pi k f_0 t}
+$$
+Si può dunque passare da una rappresentazione monolatera ad una bilatera, a
+frequenze ``negative'' corrispondono valori delle fasi di $c_k$
+antisimmetrici, di segno opposto dato che $c_k = c_k^*$.
+
+Viceversa lo spettro di ampiezza sarà simmetrico rispetto all'asse verticale,
+le ampiezze però saranno dimezzate ($|c_k| = A_k/2$).
+
+Sono sensate dunque anche le frequenze negative che compaiono nella
+rappresentazione bilatera.
+
+La sequenza dei coefficienti complessi è Hermitiana, ossia sono sequenze
+complesse che rispettano una simmetria pari nel modulo e dispari nella fase, la
+loro somma dà sempre una coppia di termini reali.
+
+
+Segnale replica dell'impulso di durata $\tau$ e ampiezza unitaria.
+
+
+$$
+x(t)=AR_Rep_{T_0}\{P_\tau(t)\}
+$$
+Se la durata degli impulsi diminuisce, deve aumentare l'altezza, si ricorda che
+l'integrale dell'impulso è sempre unitario.
+
+Si esegue l'integrale dopo aver calcolato il limite.
+$$
++{\tau\to0} \text{ rep}_{T_0} \left\{\frac{1}{\tau_z}\right\} = \lim_{\tau \to
+0}
+\left[ \frac{1}{\tau} \kinfsum  P_\tau(t-kT_0) \right] =
+\hat{x}(t)
+$$
+dunque
+$$
+\int_{\hat{k}T_0-\varepsilon}^{\hat{k}T_0-\varepsilon} \hat{x}(t)dt = 1
+$$
+Il treno di impulsi opportunamente scelto converge ad una funzione
+generalizzata denominata \textit{Delta di Dirac}.
+
+La delta gode della seguente proprietà di \textit{campionamento}
+ossia
+$$
+\infint x(t)
+\delta(t-t_0) dt = x(t_0)
+$$
+
+Si analizza lo spettro del treno campionatore, si dice che assuma uno spettro
+``a pettine''.
+
+$$
+\frac{1}{\tau} \text{ rep}_{T_0} \{P_\tau(t)\} = \sum{k-\infty}^{+\infty} c_k
+e^{j2\pi k f_0} = ... = \sum f_0e^{j2k\pi f_0}
+$$
+
+Sono tutti multipli alla stessa ampiezza.
+
+Lo spettro a pettine può essere chiamato con la sommatoria
+$$
+\kinfsum \delta(t-kT_0)
+$$
+
+
+\section{Analisi spettrale di segnali non periodici - Trasformata di Fourier}
+Lo spettro di un segnale descritto da una certa funzione $x(t)$ è ciò che si
+ottiene valutando la trasformata di Fourier.
+
+Si consideri un segnale periodico, può essere rappresentato in una forma
+compatta ed elegante in una forma trigonometrica con coefficienti complessi
+$c_k$.
+
+Se il segnale non è periodico? Si assuma un segnale non periodico con un
+periodo $T_0$ estremamente grande, allora $f_0\to 0 $ dunque il contenuto
+spettrale si addensa in una zona più piccola.
+
+Si riscrive il coefficiente al variare della frequenza. Si potrebbe
+rappresentare il segnale mediante i contributi pesati in frequenza.
+
+Si ottiene la definizione o equazione di \textit{sintesi} di Trasformata di
+Fourier
+$$
+F[x(t)] = \infint X(f) e^{j2\pi ft} df
+$$
+
+Viceversa l'equazione di analisi della trasformata di Fourier
+$$
+F^{-1}[X(f)] = \infint x(t) e^{-j2\pi ft}dt
+$$
+
+Mediante le formule di Eulero è possibile scomporre la trasformata,
+$$
+X(f) = \infint x(t) e^{-j 2\pi f t} dt =
+\infint x(t) \cos(2\pi f t) dt - j \infint
+x(t) \sin (2\pi f t) dt
+$$
+
+La rappresentazione nel dominio della frequenza è una delle varie
+rappresentazioni spettrali, una qualsiasi trasformazione biunivoca permette di
+ottenere una rappresentazione spettrale di un segnale.
+
+Trasformata del segnale $x(t)$ nella variabile $f$
+$$
+F[x(t)](f)
+$$
+una qualunque funzione $a(x)$ può essere trasformata nella rappresentazione
+$A(y)$ dunque $F[a(x)](y)$.
+$$
+F[a(x)](y) = \infint a(x)e^{-j2\pi y x} dx
+$$
+
+L'antitrasformata è in realtà molto simile alla trasformata, cambia il segno
+dell'esponenziale
+$$
+x(t) = \infint X(f) e^{j2\pi f t } dt
+$$
+sono cioè quasi la stessa cosa, ossia la trasformata di Fourier si definisce
+quasi \textbf{iperpotente}.
+Ad esempio l'operatore ``opposto'' (o negato) è un operatore iperpotente, se
+applicato due volte ritorna alla condizione di partenza.
+La trasformata di Fourier non è completamente iperpotente, va cambiato il segno
+all'esponenziale, in caso contrario se si applica due volte la trasformata di
+Fourier ad un segnale $x(t)$ si ottiene una versione ``ribaltata''
+$$
+F \left[F [x(t)]\right] = x(-t)
+$$
+Applicata a segnali pari è invece iperpotente, il ribaltamento di un
+segnale simmetrico non ha effetto sul risultato.
+
+\subsection{Esempio di trasformata di un segnale}
+Si consideri un segnale transitorio denominato finestra rettangolare, indicato
+con $A\text{rect}_T(t)$, si considera solitamente centrata in 0, di ampiezza
+$T$, calcoliamone la trasformata di Fourier per esercizio nella variabile $f$.
+$$\begin{aligned}
+F[A\text{rect}_T(t)](f) &= \infint A\text{rect}_T(t)e^{-j2\pi f t} dt =
+A\int_{-T/2}^{T/2} e^{-j2\pi f t } dt = \left.\frac{A}{-j2\pi f}e^{-j2\pi ft
+}\right|_{-T/2}^{T/2} = \\
+&= \frac{A}{-j2\pi f } \left( e^{-j\cancel{2}\pi f T/\cancel{2}} -
+e^{j\cancel{2}\pi f T/\cancel{2}}
+\right) = \frac{A}{\pi f}\sin(\pi fT) = AT\text{sinc}(fT)
+\end{aligned}$$
+
+Si potrebbe rappresentare lo spettro del modulo della funzione, potrebbe essere
+una funzione complessa ma poiché la funzione da trasformare è pari allora la
+sua trasformata è reale e conserva la parità.
+%rappresenta modulo sinc, si ottiene l'andamento a ``lobi''
+C'è un lobo principale in zero dove la funzione sinc è prolungabile per
+continuità e l'ampiezza della finestra è pari alla sua altezza ($AT$), gli zeri
+si hanno in corrispondenza dei valori interi dell'argomento, ovvero quando
+$f=n/T$ con $n\in \mathbb{N}$.
+
+Dunque
+$$
+A\text{rect}_T(t) \stackrel{\mathcal{F}}{\longrightarrow} AT\text{sinc}(fT)
+$$
+$$
+AB\text{sinc}(tB) \stackrel{\mathcal{F}}{\longrightarrow} A\text{rect}_B(f)
+$$
+
+
+Lo spettro di una sinc è uno spettro uniforme di un intervallo di semiampiezza
+$B$, ossia sono contenute tutte le frequenze in maniera uniforme di ampiezza
+$2A$ nella rappresentazione fisica monolatera da $0 \text{ a } B$, questo
+segnale non è fisicamente realizzabile, ha uno spettro a banda limitata detto
+``brick-wall''
+%Inserisci grafico da sinc a brick
+
+Si immagini di avere un segnale in continua di ampiezza unitaria,
+trasformandolo secondo Fourier si ottiene il seguente integrale
+$$
+1 \stackrel{\mathcal{F}}{\longrightarrow}\infint e^{-j2\pi f t} dt = \quad ?
+$$
+Come potrei calcolare quest'integrale? si procede diversamente calcolando la
+trasformata dell'impulso
+$$
+\delta(t) \stackrel{\mathcal{F}}{\longrightarrow} \infint\delta(t) e^{-j2\pi
+ft}dt = 1
+$$
+dunque la trasformata della funzione costante è proprio $\delta(t)$.
+
+
+Con un generico segnale periodico rappresentato nella sua forma generale con i
+coefficienti complessi si ottiene, eseguendo la trasformata
+$$\begin{aligned}
+\kinfsum c_ke ^{j2\pi k f_0 t}
+\stackrel{\mathcal{F}}{\longrightarrow} &\infint
+\kinfsum c_ke ^{-j2\pi(f -  k f_0) t} dt =
+\kinfsum c_k \infint e^{-j 2\pi (f-kf_0)t} dt = \\
+&= \kinfsum c_k \delta(f-kf_0)
+\end{aligned}$$
+I segnali periodici hanno dunque spettro ``a righe'', il seno campionatore ha
+uno spettro a pettine, le ampiezze delle righe sono costanti.
+

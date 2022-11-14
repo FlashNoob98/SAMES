@@ -1,0 +1,107 @@
+
+\section{}
+%Riassunto
+Si è vista la finestra di Hamming, descritta dalla (inserisci ref), trasformata
+secondo Fourier ottenendo un risultato pari a
+$$
+\frac{T}{2}e^{-j\pi fT}\sinc(fT) - \frac{T}{4}e^{-j\pi (f-\frac{1}{T})T}
+\sinc((f-\frac{1}{T})T) - \frac{T}{4}e^{-j\pi(f+\frac{1}{T})T}
+\sinc((f+\frac{1}{T})T))
+$$
+
+$$
+= \frac{T}{4}e^{-j\pi fT}
+(2\sinc(fT)-e^{j\pi}\sinc((f-\frac{1}{T})T) -
+e^{-j\pi}\sinc((f+\frac{1}{T})T))
+$$
+svolgendo il modulo
+$$
+\frac{T}{4}(2\sinc(fT)+\sinc((f-\frac{1}{T})T) +
+\sinc((f+\frac{1}{T})T))
+$$
+
+\textbf{Esercizio proposto}: Considerare una finestra di Hamming definita
+simmetricamente rispetto all'origine $t \in [-\frac{T}{2},\frac{T}{2}]$
+$$
+h(t) = \frac{1}{2} + \frac{1}{2}\cos(\frac{2\pi t}{T})
+$$
+
+\textbf{Esercizio proposto}:
+$$
+FT[h(n)] = \sum_{n=0}^{N-1} h(n)e^{-j2\pi \nu n} = \frac{1}{2} D_n (\nu)
+-\frac{1}{4} D_n (\nu - \frac{1}{N} - \frac{1}{4} D_N(\nu+\frac{1}{N})
+$$
+con
+$$
+D_N(\nu) = e^{-j\pi \nu (N-1)} \frac{\sin(\pi \nu N)}{\sin(\pi \nu)}
+$$
+
+\section{filtraggio di un segnale}
+È un'operazione svolta per migliorare l'elaborazione del segnale a posteriori
+dall'acquisizione, sia in tecniche analogiche che digitali.
+
+Un passo spesso presente nella elaborazione del segnale è il filtraggio,
+finalizzato alla riduzione del rumore, potrebbe essere inserito dall'atto
+stesso della conversione analogica-digitale, anche introdotto dal convertitore
+stesso.
+
+Il filtraggio pu`o essere rappresentato da un sistema con la sua risposta
+impulsiva $h(n)$ tale che produca un segnale
+$$y(n) =
+\sum_{m=-\infty}^{+\infty}x(n-m)h(m) = \sum_{m=-\infty}^{+\infty}h(n-m)x(m)
+$$
+
+All'atto pratico, il segnale di ingresso e di uscita, e la funzione di
+trasferimento del sistema sono funzioni causali. Il prodotto di
+convoluzione è commutativo.
+
+Un semplice filtro può essere quello di media aritmetica così definita
+$$
+h(n) \frac{1}{N} \text{rect}_N(n)
+$$
+
+
+Il filtro ``scorre'' verso destra all'aumentare di $m$, ``scorrendo'' tutto il
+segnale e mediando ogni volta i $N$ campioni precedenti al campione $m$.
+
+
+
+
+$$
+FT[\frac{1}{N}\text{rect}_N(n)](\nu) = \sum_{n=0}^{N-1} \frac{1}{N}e^{-j2\pi
+\nu n} = \frac{1}{N} \sum_{n=0}^{N-1} x^n = \frac{1}{N} \frac{1-e^{-j2\pi
+\nu N}}{1-e^{-j2\pi\nu}} \frac{\sin(\pi\nu N)}{\sin(\pi \nu)} = \frac{1}{N}
+D_n(\nu)
+$$
+
+
+Moving average, è una categoria di filtri nella quale ricade anche la media
+aritmetica, in alternativa una media triangolare è ancora una media mobile.
+
+Altri filtri possibili sono chiamati Auto regressivi (AR), l'uscita è
+$$
+y(n) = a_0x(n) - b_1y(n-1) - \dots -b_{M-1} y(n-(M-1))
+$$
+Le uscite hanno memoria delle uscite agli istanti precedenti.
+
+ARMA
+$$
+y(n) + b_1 y(n-1) + \dots  = a_0x(n) + a_1x(n-1) + \dots
+$$
+
+Un filtro con parte autoregressiva potrebbe avere memoria infinita e divergere.
+
+\section{Z-trasformata}
+Così definita
+$$
+X(z) = \sum_{n=0}^{+\infty} x(n)z^{-n}
+$$
+può essere vista come un'estensione al piano complesso della trasformata di
+Fourier con $z = e^{-j2\pi \nu}$ o viceversa la trasformata di Fourier può
+essere vista come una restrizione della trasformata di Fourier al cerchio di
+raggio unitario.
+Analogamente con la trasformata di Laplace, se l'ascissa di trasformabilità è
+minore di zero, allora la restrizione della trasformata di Laplace all'asse
+delle ordinate coincide con la trasformata di Fourier.
+
+
