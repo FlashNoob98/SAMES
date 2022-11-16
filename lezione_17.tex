@@ -1,0 +1,62 @@
+
+\section{Phasor Measurement Unit}
+Le funzionalità di questi dispositivi sono un sottinsieme delle funzionalità
+degli analizzatori di rete, utilizati per misurare la power quality.
+Gran parte delle macchine elettriche sono alimentate da tensione sinusoidale,
+caratterizzata da alcuni parametri che ne determinano la qualità, la tensione
+ad esempio ha un valore nominale di 230$V_{rms}$, una frequenza nominale di $50
+Hz$, nel 95\% del tempo il valore efficace è garantito dal gestore della rete.
+Si può garantire inoltre una caratteristica sulla continuità del servizio, dal
+punto di vista tecnico gli effetti riscontrabili sulla tensione di
+alimentazione sono riconducibili a vari fenomeni:
+\begin{itemize}
+ \item Sag di tensione, ovvero un abbassamento del valore della tensione in
+certi istanti di tempo
+\item Swell, è il duale del Sag, è un incremento dei valori efficaci della
+tensione, gli effetti di sag e swell possono alternarsi secondo uno schema
+ripetitivo e dare origine al
+\item flicker, ovvero uno sfarfallio, veniva percepito inizialmente con le
+lampade, corrisponde ad una modulazione in ampiezza del segnale nel tempo.
+Questo fenomeno è spesso dovuto alla presenza di carichi particolari come forni
+ad induzione.
+\item Interruzione, oltre ad un abbassamento si può avere una riduzione tale
+che causa o viene considerata come un'interruzione della tensione, può essere
+di breve durata, media o lunga durata.
+La microinterruzione ha una durata inferiore alla durata del ciclo, se
+coinvolge più cicli si parla di interruzione.
+Alcuni macchinari sono più robusti di altri, ovvero hanno una certa inerzia nel
+loro funzionamento, possono funzionare anche in presenza di interruzioni
+dell'alimentazione, altri macchinari invece vanno in stallo.
+Per l'utenza domiciliare la power quality non presenza un disservizio, per
+l'utenza industriale invece un'interruzione del servizio può dar luogo anche a
+gravi perdite economiche ed interruzioni del ciclo produttivo.
+\end{itemize}
+
+Gli strumenti di power quality possono anche essere installati nel punto da
+misurare per periodi relativamente lunghi, al fine di misurare le performance
+della rete nel tempo.
+
+I PMU sono installati nel sistema di trasmissione di energia elettrica, sono
+una rete distrumenti, sincronizzati tra loro e installati per capire se in una
+certa area geografica per misurare se la tensione trasmessa dovesse presentare
+degli sfasamenti, che potrebbero compromettere l'intera stabilità del sistema.
+
+Per la sincronizzazione dei PMU si deve utilizzare un riferimento esterno, si
+usa solitamente il segnale orario diffuso dai satelliti GPS.
+Gli sfasamenti vanno contenuti per garantire la stabilità della rete.
+
+Le versioni più evolute dei PMU permettono di effettuare anche l'analisi
+armonica.
+
+Si vogliono estrarre i valori di misura acquisiti dagli strumenti, esiste un
+front-end analogico, dopodichè il senale si digitalizza poi viene elaborato.
+La tensione di rete è di tipo sinusoidale ma utilizzando tale modello si
+trascurerebbero tanti parametri.
+
+Il rumore può essere filtrato da un sistema digitale o
+analogico.
+I due segnali ottenuti, chiamati x e y, combinati tra loro danno origine al
+``phase unwrap''.
+
+
+
