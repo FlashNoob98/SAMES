@@ -58,5 +58,51 @@ analogico.
 I due segnali ottenuti, chiamati x e y, combinati tra loro danno origine al
 ``phase unwrap''.
 
+%%%%% BUCO GALATTICO
 
+
+Il metodo dei battimenti e l'elaborazione descritta dallo schema ha il
+vantaggio di isolare il termine delle variazioni della fase rispetto ad un
+riferimento atteso, con i battimenti si effettua la proiezione di un fasore su
+un piano con due riferimenti ortogonali con coseno e seno, se la frequenza di
+riferimento è proprio quella del segnale, si ottiene la proiezione di un
+fasore, altrimenti c'è la fluttuazione, viceversa il termine $A$ si corregge
+automaticamente eseguendo il rapporto nell'algoritmo, le variazioni di ampiezza
+si compensano.
+
+Se si prendono i segnali $X$ e $Y$ e si estrae la radice $X^2$ e $Y^2$ si
+ottiene un termine costante $A/2$ e un termine pari ad $A/2a(n)$.
+
+La frequenza istantanea è stata definita come
+$$
+f(t) \stackrel{\Delta}{=} \frac{1}{2\pi} \frac{d}{dt}\Psi(t)
+$$
+con $\Psi(t) = 2\pi f_0t - \phi(t)$
+
+
+Il PMU può essere utilizzato per la misura di frequenza istantanea, non sono
+però progettati per lavorare su ampi range.
+
+Un segnale può essere rappresentato in una forma quasi ridondante, con un
+corrispondente segnale complesso
+$$
+x(t) \rightarrow \tilde{x}(t)) = x(t) + jx_H(t)
+$$
+con la trasformata di Hilbert così definita
+$$
+x_H(t) \stackrel{\Delta}{=} \frac{1}{\pi}\infint  \frac{x(\tau)}{t-\tau}d\tau
+$$
+La trasformata di Hilbert restituisce la componente in quadratura rispetto al
+segnale
+$$
+x(t) = A\cos(2\pi f_0 t) \longrightarrow \tilde{x}(t) = Ae^{j2\pi f_0 t} =
+A\left[ \cos(2\pi f_0 t) + j\sin(2\pi f_0 t) \right]
+$$
+
+Valutando la fase istantanea e derivando il segnale si può facilmente ottenere
+la frequenza istantanea da questa rappresentazione del segnale.
+$$
+f(t) = \frac{1}{2\pi} \frac{d}{dt} \left[
+\text{tan}^{-1}\left(\frac{x_H(t)}{x(t)}\right) \right]
+$$
 
