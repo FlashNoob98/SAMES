@@ -17,10 +17,13 @@ $$
 \frac{\Delta^2}{12}
 $$
 
-Si è assunto implicitamente che il rumore di quantizzazione sia stazionario, ovvero che le sue caratteristiche non dipendono dal tempo, se non fosse stato tale si sarebbe dovuta considerare una "pdf" dell'errore e del tempo.
+Si è assunto implicitamente che il rumore di quantizzazione sia stazionario, 
+ovvero che le sue caratteristiche non dipendono dal tempo, se non fosse stato 
+tale si sarebbe dovuta considerare una "pdf" dell'errore e del tempo.
 
 Si analizza il processo di trasformazione di un convertitore analogico-digitale 
-(ADC), si ha un processo di campionamento e quantizzazione, il processo di quantizzazione è sede di un rumore additivo $e(t)$
+(ADC), si ha un processo di campionamento e quantizzazione, il processo di 
+quantizzazione è sede di un rumore additivo $e(t)$
 
 Per capire l'impatto del rummore di quantizzazione sul segnale si definisce una
 metrica chiamata SNR (\textit{Signal-to-Noise-Ratio}) espressa in deciBel
@@ -50,25 +53,40 @@ $$
 SNR = b\cdot 6.02 + 10.8 + 20\log_{10}\left(\frac{\sigma_x}{R}\right)
 $$
 
-Si considera ad esempio un segnale siusoidale di ampiezza $R/2$, il valore \textit{RMS} sarà $\frac{R}{2\sqrt{2}}$, il cui quadrato è $\frac{R^2}{8}$, si ripete la stima del SNR, ottenendo:
+Si considera ad esempio un segnale siusoidale di ampiezza $R/2$, il valore 
+\textit{RMS} sarà $\frac{R}{2\sqrt{2}}$, il cui quadrato è $\frac{R^2}{8}$, si 
+ripete la stima del SNR, ottenendo:
 $$
-SNR = 10\log_{10} \frac{x_{rms}^2}{e^2_{rms}} = 10\log_{10}\frac{R^2}{8R^2}12\cdot 4^b = 10\log_{10}4^b + 10\log_{10}(\frac{12}{8}) =
+SNR = 10\log_{10} \frac{x_{rms}^2}{e^2_{rms}} = 10\log_{10}\frac{R^2}{8R^2}
+12\cdot 4^b = 10\log_{10}4^b + 10\log_{10}(\frac{12}{8}) =
  b\cdot 6.02 + 1.73\ dB
 $$
-per un convertitore ad 8-bit il valore di SNR sarà $SNR \leq 50\ dB$, aggiungendo ad esempio un bit si incrementa il rapporto di circa $6\ dB$.
+per un convertitore ad 8-bit il valore di SNR sarà $SNR \leq 50\ dB$, 
+aggiungendo ad esempio un bit si incrementa il rapporto di circa $6\ dB$.
 
-Se il convertitore è reale, si definisce la \textit{SINAD} ovvero il "signal to noise and distortion", si aggiunge un contributo di distorsione dovuto alla non uniformità della quantizzazione.
+Se il convertitore è reale, si definisce la \textit{SINAD} ovvero il "signal to 
+noise and distortion", si aggiunge un contributo di distorsione dovuto alla non 
+uniformità della quantizzazione.
 
-Se si fornisce ad un convertitore un segnale sinusoidale, accertandosi di evitare
-il sovraccarico, tutti i valori ottenuti possono essere elaborati effettuando ad esempio un sinnusoidal fitting, si può valutare dunque il SINAD, sui dati 
-quantizzati si può sottrarre il segnale descritto dal modello, in questo modo è possibile ottenere una misura del segnale rappresentativo del rumore e della distorsione $\varepsilon_n$, la potenza del rumore sarà
+Se si fornisce ad un convertitore un segnale sinusoidale, accertandosi di 
+evitare
+il sovraccarico, tutti i valori ottenuti possono essere elaborati effettuando 
+ad esempio un sinnusoidal fitting, si può valutare dunque il SINAD, sui dati 
+quantizzati si può sottrarre il segnale descritto dal modello, in questo modo è 
+possibile ottenere una misura del segnale rappresentativo del rumore e della 
+distorsione $\varepsilon_n$, la potenza del rumore sarà
 $P_e = \frac{1}{M}\sum_{n=1}^{M} \varepsilon^2_n$.
-Il SINAD del convertitore si assume prossimo all'SNR entro la banda del convertitore per poi decrescere rapidamente superata la banda.
+Il SINAD del convertitore si assume prossimo all'SNR entro la banda del 
+convertitore per poi decrescere rapidamente superata la banda.
 
 Vanno confrontati i grafici dei SINAD forniti dal produttore per valutare
-la bontà di un convertitore, non conta solo il numero di bit e non è detto che un convertitore, ad esempioa 12 bit sia migliore di uno ad 8.
+la bontà di un convertitore, non conta solo il numero di bit e non è detto che 
+un convertitore, ad esempioa 12 bit sia migliore di uno ad 8.
 
-Le prestazioni possono essere espresse in modo equivalente con un ulteriore parametro chiamato ENOB (\textit{Effective number of bit}), numero effettivo di bit è un numero equivalente che permette di ricavare una relazione tra il SINAB e l'SNR, ovvero:
+Le prestazioni possono essere espresse in modo equivalente con un ulteriore 
+parametro chiamato ENOB (\textit{Effective number of bit}), numero effettivo di 
+bit è un numero equivalente che permette di ricavare una relazione tra il SINAB 
+e l'SNR, ovvero:
 $$
 SNR = 6.02b + 1.73 \rightarrow SINAD = 6.02\cdot ENOB + 1.73
 $$
@@ -100,3 +118,68 @@ di un convertitore reale rispetto ad un convertitore ideale.
 
 Anche l'ENOB come il SINAD è una metrica che decade all'aumentare della frequenza.
 
+È possibile utilizzare degli approcci di elaborazione numerica che consentono 
+di incrementare la risoluzione del convertitore, barattando frequenza e 
+risoluzione.
+Si consideri collegata in serie una macchina che elabori i segnali acquisiti 
+dal convertitore, in streaming, è possibile implementare un paradigma di 
+elaborazione
+che prevede un filtro passa-basso (FIR) e uno stadio di \textit{decimazione}. 
+Il filtro FIR può essere un filtro a media mobile, aritmetica o pesata ecc... È 
+possibile barattare l'oversampling per la risoluzione, il contenuto spettrale 
+di un segnale di rumore di quantizzazione introdotto dall'ADC è tipicamente 
+uniformemente distribuito su tutto lo spettro fino ad $M\cdot f_s/2$. Ciò 
+significa che se si sceglie una certa frequenza di campionamento $f_s/2$, allora
+la potenza del rumore di quantizzazione
+$$
+e^2_{rms} = \frac{\Delta^2}{12} 
+$$
+questa densità ha una diversa ampiezza se si lavora con una frequenza $f_s$ più 
+alta o 
+più bassa, si abbatte il rumore se si lavora con una frequenza di campionamento 
+più elevata.
+
+Sia dato un certo segnale sinusoidale da esaminare a frequenza nota, si ha una 
+dinamica molto più elevata usando una frequenza di campionamento maggiore, per 
+quanto riguarda il rapporto SNR in realtà non c'è alcuna variazione (stessa 
+cosa per l'ENOB)
+
+Analizzando un segnale con una frequenza di campionamento molto più elevata del 
+segnale stesso, si ottengono numerosi campioni "superflui", il numero di 
+campioni memorizzabili è finito. Accoppiando l'uso di un filtro passa-basso ed 
+una elevata frequenza di campionamento è possibile attenuare efficacemente 
+l'errore.
+$$
+SNR = 10\log_{10} \frac{P_x}{\frac{\sigma_e^2}{M}} = 10\log_{10} \frac{P_x}{\sigma_e^2} + 10\log_{10}M
+$$
+$M$ è solitamente un multiplo di 2, raddoppiando ad esempio la $f_s$ si 
+raddoppia il rapporto SNR o equivalentemente si incrementa la risoluzione di 
+mezzo bit, quadruplicando la $f_s$ si ottiene $p = 2$
+$$
+10\log_{10}2^p = p\cdot \log_{10}2 = p\cdot 3.01
+$$
+Il limite superiore alla frequenza è la saturazione del convertitore.
+
+In molti oscilloscopi la modalità di sovracampionamento e decimazione è
+offerta automaticamente dalla macchina ed eseguita in streaming, non è 
+necessario dunque riversare in memoria tutti i campioni acquisiti ad una $f_s$ 
+più elevata ma solo i campioni utili, che non si ripetono, vengono memorizzati, 
+dunque la memorizzazione avviene ad una frequenza più bassa rispetto alla 
+frequenza di campionamento, ciò permette di ottenere un risparmio in memoria.
+Alcuni nomi commerciali per questa modalità sono: \textit{HiRes}, 
+\textit{EnhRes}... l'algoritmo della \textit{Tektronix} utilizza la media 
+mobile.
+La rappresentazione dei valori è \textit{estesa} ovvero con 8 bit si possono 
+avere rappresentazioni a 16 bit per rappresentare i numeri decimali, o comunque 
+i valori intermedi tra i codici. 
+I valori non saranno più [-127,127] ma accodando un byte nella rappresentazione, che equivale a moltiplicare per 128, i valori diventeranno
+65536 ovvero [-32767,32767], in realtà lo step tra un valore e l'altro non sarà 
+più di 1 ma di 256, non diventeranno mai significativi a meno che non si 
+abilita una modalità di acquisizione \textit{HiRes} allora effettuando la media 
+aritmetica tra due campioni nella codifica ad 8 bit si trova un valore 
+intermedio rappresentato nella codifica a 2 byte (16bit).
+
+Un'altra modalità di acquisizione che sfrutta la codifica a 2 byte è la 
+modalità di acquisizione \textit{Average}, non si sovrascrivono i campioni ma 
+vengono mediati tra schermate successive in memoria, dunque diventa 
+significativo il byte aggiunto nella rappresentazione a 2 byte.
