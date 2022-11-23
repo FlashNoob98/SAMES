@@ -68,16 +68,18 @@ talvola le architetture rispecchiano fisicamente quest approccio logico, spesso 
 il sample and hold, la quantizzazione invece è utilizzata dlla logice di coneg. Da un qunto di vista astratto,
 la quantizzazione associa una variabile reale ad una naturale
 $$
-Q: \mathcal{R} \longrightarrow N : Q[x] =x_k \ \text{se } x\in \]_k = (d_k,d_{k+1})
+Q: \mathcal{R} \longrightarrow N : Q[x] =x_k \ \text{se } x\in \]_k 
+= (d_k,d_{k+1)
 $$
-
 L'estensione dell'intervallo $\Delta = d_{k+1}-d_k$ è detto passo (o intervallo) di quantizzazione.
 Se $x$ è espressa in unità di $\Delta$, allora le soglie saranno
 
+$$
 \begin{cases}
     d_k = k-\frac{1}{2}\\
     d_{k+1} = k+\frac{1}{2}
 \end{cases}
+$$
 Si può supporre la quantizzazione $Q(x) \leq \text{rounding off}$
 
 All'atto pratico i convertitori lavorano su un range di frequenze limitato, la curva di trasferimento 
@@ -113,5 +115,5 @@ Quando si converte un segnale in forma digitale questo verrà degradato dall'err
 
 $$
 \sigma^2_e \stackrel{\Delta}{=} \infint (e-\mu_e)^2 pdf(e) de 
-= \int_{\frac{\Delta}{2}}^{\frac{\Delta}}{2} e^2 \frac{1}{\Delta} de = \frac{\Delta^2}{12} 
+= \int_{\frac{\Delta}{2}}^{\frac{\Delta}{2}} e^2 \frac{1}{\Delta} de = \frac{\Delta^2}{12} 
 $$

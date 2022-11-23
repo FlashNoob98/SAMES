@@ -1,0 +1,102 @@
+
+\section{Rumore di quantizzazione}
+Tale rumore è un processo aleatorio, dunque si assegna solitamente a tale
+funzione una variabile aleatoria, parte di un processo limitato e a media nulla?
+
+$$
+e = x - Q(x)
+$$
+Si asusme solitamente il modello di variabile aleatoria uniforme (pdf), data la
+definizione di densità l'integrale della pdf deve essere unitario, allora la
+sua ampiezza sarà pari a $1/\Delta$ con $\Delta$ l'ampiezza dell'intervallo.
+
+La varianza è csì definita:
+$$
+\sigma^2_e = \infint (e-\mu)^2 pdf(e) de = \int_{-\Delta/2}^{\Delta/2} e^2 \frac{1}{\Delta} de =\left. \frac{1}{\Delta} \frac{e^3}{3} \right|_{-\Delta/2}^{\Delta/2} = 
+\frac{1}{3\Delta} \left(\frac{\Delta^3}{8}+\frac{\Delta^3}{8}\right) = 
+\frac{\Delta^2}{12}
+$$
+
+Si è assunto implicitamente che il rumore di quantizzazione sia stazionario, ovvero che le sue caratteristiche non dipendono dal tempo, se non fosse stato tale si sarebbe dovuta considerare una "pdf" dell'errore e del tempo.
+
+Si analizza il processo di trasformazione di un convertitore analogico-digitale 
+(ADC), si ha un processo di campionamento e quantizzazione, il processo di quantizzazione è sede di un rumore additivo $e(t)$
+
+Per capire l'impatto del rummore di quantizzazione sul segnale si definisce una
+metrica chiamata SNR (\textit{Signal-to-Noise-Ratio}) espressa in deciBel
+$$
+SNR \stackrel{\Delta}{=} 10\log_{10}\frac{\sigma_x^2}{\sigma_e^2} = 
+20\log_{10}\frac{\sigma_x}{\sigma_e} = 10\log_{10}\frac{P_x}{P_e} = 
+20\log_{10}\frac{V_{x,rms}}{V_{e,rms}}
+$$
+
+La potenza del rumore di quantizzazione è dunque
+$$
+\sigma_e^2 = \frac{\Delta^2}{12}
+$$
+con $\Delta = \frac{R}{2^b}$, $R$ è il range del convertitore e $b$ il numero 
+di bit disponibili al convertitore per codificare il quanto (risoluzione).
+Si sostituisce il passo $\Delta$ nella definizione di $\sigma_e$
+$$
+\sigma_e^2 = \frac{\Delta^2}{12} = \frac{1}{12}\left(\frac{R}{2^b}\right)^2 = \frac{R^2}{12\cdot 2^{2b}}
+$$
+Di conseguenza l'SNR definito precedentemente risulta pari a
+$$
+SNR = 10\log_{10}\frac{\sigma_x^2}{\sigma_e^2} = 10\log_{10}\left(\frac{\sigma_x^2}{R^2}12(2^2)^b\right) = 10\log_{10} 4^b + 10\log_{10}(12) +
+10\log_{10}\left(\frac{\sigma_x^2}{R}\right)^2
+$$
+Approssimando i logaritmi si ottiene
+$$
+SNR = b\cdot 6.02 + 10.8 + 20\log_{10}\left(\frac{\sigma_x}{R}\right)
+$$
+
+Si considera ad esempio un segnale siusoidale di ampiezza $R/2$, il valore \textit{RMS} sarà $\frac{R}{2\sqrt{2}}$, il cui quadrato è $\frac{R^2}{8}$, si ripete la stima del SNR, ottenendo:
+$$
+SNR = 10\log_{10} \frac{x_{rms}^2}{e^2_{rms}} = 10\log_{10}\frac{R^2}{8R^2}12\cdot 4^b = 10\log_{10}4^b + 10\log_{10}(\frac{12}{8}) =
+ b\cdot 6.02 + 1.73\ dB
+$$
+per un convertitore ad 8-bit il valore di SNR sarà $SNR \leq 50\ dB$, aggiungendo ad esempio un bit si incrementa il rapporto di circa $6\ dB$.
+
+Se il convertitore è reale, si definisce la \textit{SINAD} ovvero il "signal to noise and distortion", si aggiunge un contributo di distorsione dovuto alla non uniformità della quantizzazione.
+
+Se si fornisce ad un convertitore un segnale sinusoidale, accertandosi di evitare
+il sovraccarico, tutti i valori ottenuti possono essere elaborati effettuando ad esempio un sinnusoidal fitting, si può valutare dunque il SINAD, sui dati 
+quantizzati si può sottrarre il segnale descritto dal modello, in questo modo è possibile ottenere una misura del segnale rappresentativo del rumore e della distorsione $\varepsilon_n$, la potenza del rumore sarà
+$P_e = \frac{1}{M}\sum_{n=1}^{M} \varepsilon^2_n$.
+Il SINAD del convertitore si assume prossimo all'SNR entro la banda del convertitore per poi decrescere rapidamente superata la banda.
+
+Vanno confrontati i grafici dei SINAD forniti dal produttore per valutare
+la bontà di un convertitore, non conta solo il numero di bit e non è detto che un convertitore, ad esempioa 12 bit sia migliore di uno ad 8.
+
+Le prestazioni possono essere espresse in modo equivalente con un ulteriore parametro chiamato ENOB (\textit{Effective number of bit}), numero effettivo di bit è un numero equivalente che permette di ricavare una relazione tra il SINAB e l'SNR, ovvero:
+$$
+SNR = 6.02b + 1.73 \rightarrow SINAD = 6.02\cdot ENOB + 1.73
+$$
+viene stimato sperimentalmente, non è pari fisicamente ad un numero di bit dato che può non essere intero, l'ENOB è sempre minore di $b$.
+
+La potenza di un convertitore ideale:
+$$
+e^2_{rms} = \frac{\Delta^2}{12} = \frac{\left(\frac{R}{2^b}\right)^2}{12}
+$$
+aggiungendo la distorsione si ricava un $\Delta'>\Delta$ equivalente
+$$
+e^2_{rms+dist} = \frac{(\Delta')^2}{12} = \frac{\left(\frac{R}{2^{ENOB}}\right)^2}{12}
+$$
+$$
+e^2_{tot,rms} = \frac{R}{2^{ENOB}\sqrt{12}} \frac{\Delta}{\Delta} 
+$$
+ma $\frac{R}{\Delta} = 2^b$ dunque sostituendo
+$$
+e^2_{tot,rms} = \frac{\Delta}{2^{ENOB}\sqrt{12}}2^b \Rightarrow 2^{ENOB} = 
+2^b\frac{\frac{\Delta}{\sqrt{12}}}{e_{tot,rms}} \Rightarrow ENOB = \log_2 2^b + 
+\log_2 \frac{\frac{\Delta}{\sqrt{12}}}{e_{tot,rms}} 
+$$
+in conclusione
+$$
+ENOB = b - \log_2 \frac{e^{reale}_{tot,rms}}{\frac{\Delta}{\sqrt{12}}}
+$$
+l'argomento del logaritmo è sempre maggiore di uno, dato dal rapporto del rumore
+di un convertitore reale rispetto ad un convertitore ideale.
+
+Anche l'ENOB come il SINAD è una metrica che decade all'aumentare della frequenza.
+
