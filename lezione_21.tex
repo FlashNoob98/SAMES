@@ -1,0 +1,232 @@
+''''''''''''''''''''''''''''''''''''''''""""""""""\subsection{Distribuzione ipergeometrica}
+Sia dato un numero di campioni finiti presenti ad esempio in un lotto di produzione, si vuole determinare quanti di questi siano difettosi
+$$
+p(x_i) = \frac{\binom{D}{x_i}\binom{N-D}{n-x_i}}{\binom{N}{n} }
+$$
+
+Al numeratore è presente lo spazio degli elementi che appartengono alla classe 
+di interesse (elementi $x_i$) disposti in una quantità $D$ moltiplicate le 
+disposizioni dei campioni presenti nella classe complementare $N-D$.
+
+$$
+x_i = 0, \ldots , min\{n,D\}
+$$
+la numerosità $n$ del campione potrebbe anche essere maggiore della classe di 
+interesse $D$, dunque $x_i$ non potrebbe essere più grande del campione.
+Questo modello guida le considerazioni a supporto del processo decisionale.
+
+\subsection{Distribuzione binomiale}
+In un processo in cui non si ha un lotto di produzione finito ma ci si trova in 
+regime di produzione continua, la popolazione conterrebbe infiniti elementi, si 
+utilizza un ulteriore modello chiamato della distribuzione binomiale.
+Entra in gioco in modo naturale quando si considera la prova di Bernoulli, una 
+prova che può avere soltanto due esiti positivo o negativo, la distribuzione di 
+Poisson quantifica la probabilità di avere successo $x_i$ volte su un numero 
+ripetuto di prove pari ad $n$. 
+$$
+p(x_i) = \binom{n}{x_i}p^{x_i}(1-p)^{n-x_i} \quad x_i =0,\ldots,n
+$$
+dove $p$ è la probabilità di successo e $1-p$ è la probabilità di fallimento, 
+nel lancio di una moneta sono entrambi il 50\%.
+
+Ci si potrebbe chiedere la media della variabile aleatoria $x_i$ per la 
+distribuzione ipergeometrica:
+$$
+\mu_{x_i} \stackrel{\Delta}{=} \sum_i x_i p(x_i) \mu_x = n\frac{D}{N}
+$$
+la media e la varianza per la distribuzione binomiale invece:
+$$
+\mu_{x_i} = np \quad \sigma^2_{x_i} = np(1-p)
+$$
+
+La distribuzione ipergeometrica per $N$ che tende all'infinito assume la forma 
+di una distribuzione binomiale.
+
+Mediante il controllo a campione di un processo è possibile valutare se questo 
+sia sotto controllo statistioc oppure è presente una causa speciale che 
+conferisce traiettorie al processo indesiderate che potrebbero portare il 
+prodotto o servizio a non rispettare le specifiche garantite.
+
+\subsection{Distribuzione di Poisson}
+La variabile discreta ha una distribuzione di probabilità pari a:
+$$
+p(x_i) = e^\lambda\ \lambda^{x_i}{x_i!}\ \qquad \stackrel{?}{?}
+$$
+
+$x_i$ è il numero di difetti per unità di prodotto che ci si attende ispezionando un rodotto.
+
+$$
+\sum_{x_i=0}^n \binom{n}{x_i} p^{x_i} (1-p)^{n-x_i} = 1^n = 1
+$$
+%% RIVEDI FORMULA LAMBDA
+%$$
+%\sum_{x_i=0}^{\infty}  e^{-\lambda}\frac{\lambda}{}
+%$$
+
+È probabile che la caratteristica di probabilità sia descritta da una variabile aleatoria continua, la funzione densità di probabilità per antonomasia è la densità Gaussiana, chiamata solitamente distribuzione ``normale'', caratterizzata da una media $\mu$ e una varianza $\sigma^2$, queste due identificano la distribuzione normale che è così definita:
+$$
+pdf(x) = \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}} \qquad 
+-\infty < x < + \infty
+$$
+la curva descritta da questa densità è a campana con concavità rivolta verso il basse, è centrata nel punto medio, se la densità è simmetrica allora anche la media statistica è facile da individuare, è utile indicare anche la mediana, quel numero per il quale esiste la stessa probabilità di una variabile di trovarsi prima o dopo tale punto.
+La media invece è \dots
+
+Per una distribuzione normale, media , mediana e moda coincidono, altrimenti potrebbero non coincidere affatto potrebbero esistere due dirrenenti mode.
+L'andamento della curva riferita a variabili discrete è comunque solitamente simile ad una curva a campana, al massimmo è traslata.
+Per valutare che la probabilità che l'indicatore che la variabile continua abbia, 
+Per quanto riguarda la deviazione standard, distanza $\sigma$ dalla media si ottiene il punto di flesso della curva
+Per gli intervalli di ampiezza $\sigma$, $2\sigma$ e $3\sigma$ si ottengono probabilitàche il campione si trovi in quel ragio.
+
+La $pdf$ normale standard si ottiene effettuando un cambio di variabile, a media $\mu$
+$$
+Z = \frac{x-\mu}{\sigma}
+$$
+Dato che si è normalizzato rispetto alla deviazione standard allora si parla di valori standard.
+
+Se si vuole calcolare la distribuzione cumulativa:
+$$
+\Phi(Z_t) = \int_{-\infty}^{Z_t} e^{-\frac{\mu^2}{2}}du
+$$
+
+
+Esiste un risultato fondamentale nella teoria della probabilità e della statistica che va sotto il nome di teorema centrale del limite. si supponga di avere una n-pla di variabili aleatorie indipendenti.
+
+Le variabili sarà disponibile una media $\mu_i$ ed una varianza $\sigma_i^2$
+allora la variabile sarà pari a $\mu_y = a_1\mu_1 + a_2\mu_2 + \ldots + a_m \mu_n$
+
+Operatore valore atteso: (media)
+$$
+E[x] = \mu = \int pdf(x) dx
+$$
+La varianza $\sigma^2_y = a_1^2\sigma^2_1 + a_2^2\sigma_2^2 + \ldots + a_n^2{\sigma^n}^2 
+$
+
+Sia la statistica la somma delle variaibili aleatorie indipendentei
+$$
+y = x_1 + x_2 + \ldots + x_n
+$$
+Il teorema centrale del limite afferma che 
+$$
+\frac{y-\sum_i \mu_i}{\sqrt{\sum_i \sigma^2_i}} \sim N(0,1)
+$$
+Le numerose forme di incertezza ottenute nelle misurazioni ripetue possono essere considerate dipo Gaussiano.
+
+Le cause di incertezza sono sempre associate ad una pluralità di fattori, questi possono essre indipendenti, questq variabile converge ad una variabile normale standard per $n\to\infty$
+
+Talvolta non è possibile utilizzare una variabile standard, potrebbe essere definita in un sottointervallo, ad esempio $X=e^W$ dove $W\sim N(\mu_\infty,\sigma^2_W)$
+
+Questa è definita da una densità di probabilità definita Log-normale così definita:
+$$
+pdf(x) = \frac{1}{\sqrt{2\pi} \sigma_W x} e^{-\frac{(\ln(x)-\mu_\infty)^2}{2\sigma^2_W}}
+$$
+
+Trattare la distribuzione log-normale è relativamente esemplice, il calcolo si riconduce all'utilizzo normale standard.
+Data x si vuole determinare la probabilità che questa sia minore di una certa ascissa $a$ allora $P(x<a) = P(e^W<a) = P(w< \ln(a)) = \Phi(\frac{\ln(a)-\mu_W}{\sigma_W})$
+con $a>0$.
+Introducendo una variabile normale 
+$$
+Z  = \frac{W-\mu_W}{\sigma_W}
+$$
+
+In presenza di un processo aleatorio, si effettuano dei rilievi, si quantifica 
+il rilevatore se questo corrisponde ad una grandezza fisica misurabile o almeno 
+quantificabile.
+Si deve conoscere il modello da utilizzare per determinare la forma 
+dellavariabile aleatoria, non sempre è lecito utilizzare il modello Gaussiano, 
+si ispezionano i ``Probability plot''
+
+\subsubsection{Probability Plot} Osservando 10 volte l'indicatore si ottengono 
+10 campioni distinti, vengono ordinati e si ottengono le stime dei dieci 
+percentili, non saranno equispaziati.
+Si riporta in un piano cartesiano le coordinate $(x_i',Z_i)$ se questi si 
+addensano sulla bisettrice allora è buona l'ipotesi di curva gaussiana.
+
+\chapter{Statistica inferenziale}
+È la branca della statistica a supporto del processo decisionale. Si riporta il 
+concetto di statistica: qualunque variabile aleatoria costruita combinando tra 
+loro variabili aleatorie, sip ossono definire funzioni di variabili aleatorie, 
+se gli ingressi sono di natura aleatoria, l'uscita è essa stessa una variabile 
+aleatoria, questa variaible prendeil nome di statistica, è ciò che si ottiene 
+combinando variabili aleatorie, le statistiche più comuni sono
+$$\begin{aligned}
+\bar{x} &= \frac{1}{N} \sum_{i=1}^{N}x_i \\
+S^2_x & = \frac{1}{N-1} \sum_{i=1}^N(x_i-\mu)^2 \\
+S_x &= \sqrt{S^2_x} = \sqrt{\frac{1}{N-1} \sum_{i=1}^N(x_i-\mu)^2} \\
+Z_0 &= \frac{x_i-\mu}{\sigma_x} \\
+t_0 &= \frac{x_i -\mu}{S_x} \\
+\chi_0^2 &= \frac{(N-1)S_x^2}{\sigma_x^2}
+\end{aligned}
+$$
+le $x_i$ sono osservazioni dello stesso processo aleatorio.
+Quando le statistiche hanno l'ammbizione di stimare un parammetro 
+caratteristico di una distribuzione vengono definite ``\textit{stimatori}'', 
+una statistica è essa stessa una variabile aleatoria, i valori di media e 
+varianza sono invece valori scalari, non indeterminati, nei valori degli 
+stimatori c'è invece una certa indeterminazione residua.
+
+Le statistiche in quanto variaibli aleatorie sono caratterizzate da 
+distribuzioni e quindi (se continue) densità di probabilità. Le distribuzioni 
+che caratterizzano il carattere aleatorio delle statistiche sono dette 
+distribuzini camopionarie.
+$$
+\bar{x} \sim N (\mu, \frac{\sigma^2}{N})
+$$
+Se è stato definito combinando variabili aleatorie $x_i\sim N(\mu,\sigma^2)$ 
+allora è caratterizzato da una distribuzione normale che ha la stessa media e 
+varianza $\sigma^2/N$
+
+Uno stimatore di un parametro è consistente se il suo valore atteso è identico 
+alla media $E[\bar{x}] = \mu_x$ e se la varianza che caratterizza la stima è 
+minima e tende a zero al crescere di $N$, dunque lo stimatore $\bar{x}$ è 
+consistente e caratterizzato da una distribuzione campionaria, questo risultato 
+discende dal teormea centrale del limite.
+
+Si supponga di avere una variabile aleatoria somma di tutte le osservazioni, 
+sono statisticaente indipendenti perchè avvenute sullo stesso processo a media 
+normale e varianza $\sigma$; sottraendo $N$ volte la media e normalizzando si 
+ottiene
+$$
+\frac{\sum_{i=1}^{N} x_i - N\mu}{\sqrt{N\sigma^2}}
+$$
+
+Il teorema centrale del limite ci dice che è normale standard, am moltiplicando e dividendo per $N$ 
+$$
+\frac{\left(\frac{1}{N}\sum_{i=1}^N x_i\right) - \mu}{\sqrt{\frac{\cancel{N}\sigma^2}{N^{\cancel{2}}}}} = \frac{\bar{x} - \mu}{\frac{\sigma}{\sqrt{N}}}
+$$
+se la prima è a media standard allora anche $\bar{X}$ è una variabile aleatoria è descrivibile mediante una distribuzione normale con media $\mu$ e varianza pari a $\sigma^2/N$ con $N$ la dimensione del campione su cui si ha lavorato.
+
+\subsubsection{$\chi_0^2$}
+Si considera il caso in cui l'indicatore da osservare è una variabile aleatoria normale standard e la variabile $y$ è somma dei quadrati di una n-pla di osservazioni, 
+$$
+y = x_1^2 + x_2^2+\ldots + x_N^2
+$$la statistica così costruita è distribuita $\chi^2_N$ con N gradi di libertà, la distribuzione è addensata e spostata verso sinistra, all'aumentare di $N$ l'indice di simmetria migliora ma non convergerà mai ad una gaussiana, tende sempre ad insistere su un semiasse.
+
+$$
+\chi_0^2 = \frac{(N-1)S_x^2}{\sigma^2} = \cancel{(N-1)}\frac{1}{\cancel{N-1}}\sum_{i=1}^N \left(\frac{x_i-\bar{x}}{\sigma}\right)^2
+$$
+Gli argomenti della somma ricadono negli scarti rispetto alla media, dunque osservando la varianza degli elementi sono variabili aleatorie normali standard, a mmedia nulla e varianza unitaria. La somma dei quadrati dei valori ha una distribuzione campionaria di tipo $\chi^2$.
+Variabili di questo tipo si trovano quando si rapporta una stiam della varainza alla varianza statistica, una statistica così costruita ricade in questo modello.
+Un grado di libertà nello stimatore viene perso nel momento in cui si valuta la $\bar{X}$, per questo motivo lo stimatore $S_x^2$ ha al denominatore $N-1$.
+
+
+Un'ulteriore statistica importante al fine di condurre i test delle ipotesi è la $t_0$, costruita una variabile aleatoria in questo modo, con $x$ normale standard e $y$ aleatoria con densità $\chi^2_K$
+$$
+t = \frac{x}{\sqrt{\frac{y}{k}}}
+$$
+questa distribuzione è detta ``t-di-Student'' con $k$ gradi di libertà, si incotra quando si vuole fare inferenza statistica e si valuta la statistica $t_0$
+$$
+t_0 = \frac{\bar{x}-\mu}{\frac{S_x}{\sqrt{N}}} = \frac{\left(\frac{\bar{x} -\mu }{\sigma/\sqrt{N}}\right)}{\sqrt{(N-1)\frac{S_x^2}{\sigma^2(N-1)}}}
+$$
+Il numeratore è una normale standard, la quantità $(N-1)S^2_x/\sigma^2 $ ha $K$ gradi di libertà, dunque la $t_0$ così costruita non sarà normale standard ma caratterizzata da una distribuzione t-di-Student con $N-1$ gradi di libertà.
+
+
+Se si osserva un processo standard, si può considerare una statistica 
+$$
+\bar{X} = \frac{1}{N} \sum x_i \sim N(\mu,\sigma^2)
+$$
+si può duqnue costituire una statistica di secondo livello
+$$
+Z_0 = \frac{\bar{X} - \mu}{\frac{\sigma}{\sqrt{N}}} \sim N(0,1)
+$$
+allora quella di secondo livello è normale standard.
+
