@@ -1,6 +1,6 @@
 \PassOptionsToPackage{dvipsnames}{xcolor}
 \documentclass[a4paper,11pt]{book}
-\usepackage[]{geometry}
+\usepackage[a4paper, total={7in, 8in}]{geometry}
 
 \usepackage{ucs}
 \usepackage[utf8]{inputenc}
@@ -40,9 +40,9 @@
 % Riduzione tempi di compilazione esternalizzando le figure in pdf separati
 \usepgfplotslibrary{external}
 %\usetikzlibrary{pgfplots.external}
-\tikzexternalize[prefix=tikz/]
+%\tikzexternalize[prefix=PDF/]
 \usetikzlibrary{patterns} % libreria per disegnare i pattern
-%\tikzset{prefix={tikz/}}
+%\tikzset{prefix={PDF/}}
 \usepackage{pstricks-add}
 
 \usepackage{caption}
@@ -92,10 +92,10 @@
 
 \include{lezione_17}
 
-% \include{lezione_18}
-% \include{lezione_19}
-% \include{lezione_20}
-% \include{lezione_21}
+\include{lezione_18}
+\include{lezione_19}
+\include{lezione_20}
+\include{lezione_21}
 % \include{lezione_22}
 % \include{lezione_23}
 % \include{lezione_24}

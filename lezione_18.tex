@@ -1,0 +1,119 @@
+
+\section{Segnali non stazionari}
+
+Alcuni metodi utilizzati per misurare segnali non stazionari sono i PME, phasor
+measurement unit, utilizzati e diffusi nei sistemi di trasmissione, in
+alternativa se il segnale è monocomponente, ossia ha una frequenza fondamentale
+e se ne voggliono misurare le fluttuazioni si può elaborare il segnale mediante
+la trasformata di Hilbert in modulo e fase, la fase sarà una funzione nel tempo
+con evoluzione lineare (a rampa), è talvolta interessante misurare il tasso di
+variazione della frequenza effettuando la derivata seconda della fase, ROCOF
+(rate of change of frequency).
+
+
+\subsection{Rappresentazioni tempo-frequenza}
+Si utilizzano le TFR ovvero le Time-Frequency representation tra cui la più
+famosa la ``\textit{short-time Fourier transform}''
+
+Si può dividere un brano in porzioni disgiunte e contigue, effettuando
+l'analisi spettrale su una porzione del brano, si trova che il segnale
+sinusoidale, con una frequenzza eventualmente instabile si trova una riga
+spettrale centrata su quella riga di frequenzza, analizzando le porzioni
+successive si vede se la riga spettrale si muove su frequenze puiù alte o più
+basse.
+
+Dato un segnale $s(t)$ la SFT fa corrispondere una funzione della frequeza e
+del tempo
+$$
+s(t) \longrightarrow S(f,t)
+$$
+
+Ad un segnale nel tempo discreto si fa corrispondere la seguente sommatoria
+$$
+s(n) \longrightarrow S(k,nL) = \sum_{m=nL-M}^{nL+M} s(m)e^{\frac{-j2\pi k
+m}{2M+1}\left(m-nL+M\right)}\ k=0,\dots , 2M
+$$
+equivale ad eseguire una DFT su $2M+1$ punti. È la lunghezza della porzione che
+mi determina su quanti punti effettuare la somma.
+
+Potrei usare una lunghezza arbitraria per ogni brano in funzione del parametro 
+$L$.
+
+Si snellisce il carico computazionale effettuando analisi in frequenza solo ogni
+porzione temporale, ciò porta però ad avere una minore risoluzione temporale mentre
+la risoluzione in frequenza dipende da $M$, maggiore è il numero di "bin" e migliore 
+sarà l'analisi in frequenza. 
+
+Al variare del parametro M si può modificare la risoluzione spettrale con un costo
+computazionale diverso.
+
+Con una diversa porzione di segnale al variare di $n$ si può considerare la seguente rappresentazione del brano
+$$
+S(k,nL) = \sum_{m=-M}^{M} s(m-nL) e^{-j\frac{2\pi}{2M+1}k(m+M)}
+$$
+
+Per una funzione che dipende da due variabili, la rappresentazione grafica è tipicamente
+effettuata in uno spazio tridimensionale, su un asse sono rappresentate le $n$ misurazioni
+spaziate di $L$, mentre sull'altro asse sono presennti le frequenze, si ha una rappresentazione
+"a fette" dell'analisi in frequenza, tanti piani adiacenti con la proiezione delle cime.
+
+%Libro Advanced DSP proakis paragrafi 2.4 e 5.6
+\chapter{Sistemi di conversione dei segnali}
+Il sistema di conversione è un sistema che ha in ingresso il segnale analogico e ne restituisce la versione 
+digitalizzata, esistono svaraite architetture e sistemi che realizzano queesta conversoione, 
+convertitori flash, monolitici o miltiplexati.
+
+Il processo di conversione si può dividere in un processo di campionamento ed uno di quantizzazione,
+talvola le architetture rispecchiano fisicamente quest approccio logico, spesso il circuito più usato è
+il sample and hold, la quantizzazione invece è utilizzata dlla logice di coneg. Da un qunto di vista astratto,
+la quantizzazione associa una variabile reale ad una naturale
+$$
+Q: \mathcal{R} \longrightarrow N : Q[x] =x_k \ \text{se } x\in \|_k 
+= (d_k,d_{k+1})
+$$
+L'estensione dell'intervallo $\Delta = d_{k+1}-d_k$ è detto passo (o intervallo) di quantizzazione.
+Se $x$ è espressa in unità di $\Delta$, allora le soglie saranno
+
+$$
+\begin{cases}
+    d_k = k-\frac{1}{2}\\
+    d_{k+1} = k+\frac{1}{2}
+\end{cases}
+$$
+Si può supporre la quantizzazione $Q(x) \leq \text{rounding off}$
+
+All'atto pratico i convertitori lavorano su un range di frequenze limitato, la curva di trasferimento 
+è una gradinata crescente, le pedate anche sono identiche.
+L'errore che si commette a causa della quantizzazione risulta limitata, al massimo metà del quanto.
+
+Nella realizzazione dei convertitori bipolari, ci si può imbattere in due situazioni,il convertitore
+mid-treat e a midrise, nel primo caso lo zero è proprio un punto di nullo, il convertitore restituisce un segnale nullo,
+pari al rumore, la caratteristica è dissimetrica
+
+Se il convertitore dovesse lavorare in una situazione di soovraccarico, allora il convertitore commetterebbe
+un errore di quantizzazione superiore, diventando errore di sovraccarico, non limitato, ovviamente non si può superare
+la tensione di isolamento del convertitore.
+
+Se la caratteristica è dissimetrica, può essere resa simmetrica se si rinuncia ad utilizzare un codice,
+utilizzando un numero dispari di codici pari e dispari, ad esempio $[-127,127]$ garantendo la 
+presenza del codice 0.
+
+Si possono effettuare varie codifiche dei quanti, ad esempio il binary offset oppure il bit di isegno se si lavora 
+fino ad un massimo di , il primo bit più significativo implica... 
+
+La codifica in complemento (ad uno), permette di sostituire gli zeri con gli 1, si numerano i quanti, con lo 
+zero al bit più significativo, scrivo un numero positivo, viceversa sarà negativo.
+
+La codifica più utilizzata è quella in complemento a due, si ottiene complementando la stringa e addizionando 
+1.
+
+Questa rappresentazione è la più utilizzata perchè l'ogetto più semplice all'interno della macchina
+è l'addizionatore.
+
+Quando si converte un segnale in forma digitale questo verrà degradato dall'errore di quantizzazione,
+\dots \dots \dots
+
+$$
+\sigma^2_e \stackrel{\Delta}{=} \infint (e-\mu_e)^2 pdf(e) de 
+= \int_{\frac{\Delta}{2}}^{\frac{\Delta}{2}} e^2 \frac{1}{\Delta} de = \frac{\Delta^2}{12} 
+$$

@@ -1,0 +1,282 @@
+\chapter{Metodi per il controllo statistico del processo}
+% Fonti: www.biblioteca.dieti.unina.it
+% Taylor & Francis
+% Spinger
+% Statistical quality control (process)
+% Wiley
+% Mc Graw Hill
+% Douglass Montgomery
+% Introduction to statistical Quality Control
+
+In tutte le industrie e le aziende che producono prodotti o erogano servizi 
+c'è sempre più attenzione verso il concetto di \textbf{qualità} di un servizio
+o un prodotto, esistono le carte di qualità con l'elenco degli standard che le 
+aziende si impegnano a garantire. In campo industriale c'è un gruppo di persone 
+che si interessano di tenere pronti degli strumenti per realizzare controlli 
+sul prodotto, tra cui le persone operative che eseguono prove e collaudi sul 
+prodotto. È un'azione essenziale monitorare il processo produttivo affinchè 
+esso evolva in modo efficiente, lo stesso monitoraggio è utile per determinare 
+criticità o migliorie applicabili al processo.
+Una migliore qualità del processo implica quasi sempre una migliore qualità del 
+prodotto.
+La qualità è un attributo associato ad un processo o un prodotto ma non è una 
+grandezza fisica, dunque non si misura alla stessa maniera.
+
+È possibile scindere la qualità in:
+\begin{itemize}
+    \item Intrinseca: È vista come la rispondenza del prodotto a specifiche 
+    dimensionali, può essere determinata con misure dirette sul prodotto
+    \item Estrinseca: Coinvolge la percezione dell'utente, non è facilmente 
+    quantificabile
+\end{itemize}
+Con il tempo si è affermato il concetto di associare la qualità estrinseca a 
+quella intrinseca, si ritiene che ci sia una correlazione implicita tra le due, 
+ragion per cui la qualità estrinseca si correla a quella intrinseca.
+
+Se si vuole effettuare una misura di qualità ha senso dunque soffermarsi su 
+quella intrinseca, la qualità può allora essere vista come un insieme di 
+grandezze di riferimento misurabili, una serie di indici di qualità sui vari 
+aspetti del prodotto, osservabili e quantificabili, nei casi più semplici si 
+considererà spesso una grandezza misurabile in modo oggettivo, verranno 
+comunque forniti esempi di qualità associata a grandezze quantificabili con più 
+difficoltà.
+
+\newpage
+I metodi non sono diversi da quelli itilizzati nell'indagine speculativa di 
+tipo scientifico o tecnico, questi richiedono di:
+\begin{enumerate}
+    \item Collezione dei dati
+    \item Validazione dei dati
+    \item Presentazione dei dati, viene vista come una fase intermedia, 
+    propedeutica all'elaborazione, si può ricorrere a diversi tipi di 
+    rappresentazione che mettano o meno in evidenza particolari analogie o 
+    caratteristiche del processo
+    \item Elaborazione dei dati
+    \item Presentazione dei risultati, viene stigmatizzato ciò che si è 
+    individuato nella fase di elaborazione dei dati, eventualmente con una 
+    controverifica
+\end{enumerate}
+
+Verranno esposti alcuni metodi di presentazione dei dati utilizzati.
+Solitamente questi vengono rappresentati in tabelle o grafici ma esistono 
+ulteriori metodi come istogrammi, aerogrammi ecc... sono molto semplici e 
+facilmente intuibili.
+
+\section{Stem \& Leaf Plot}
+Un particolare strumento di presentazione può essere il \textit{diagramma stelo 
+e foglie} o \textit{Stem \& Leaf Plot}
+In molte aziende o enti vengono svolte azioni di monitoraggio del processo, 
+soprattutto in molte aziende ospedaliere convenzionate con il servizio 
+sanitario nazionale vengono riportati gli indici di prestazione della 
+struttura, come ad esempio il tempo di permanenza in terapia intensiva, è un 
+parametro che influisce molto sui costi.
+L'università monitora costantemente i parametri che caratterizzano le 
+prestazioni o l'efficienza delle attività di formazione e ricerca, anche i 
+reparti amministrativi hanno delle misurazioni di performance dei processi, uno 
+di questi potrebbe essere ad esempio il tempo di rimborso delle missioni al 
+personale.
+È importante effettuare queste misurazioni per migliorare ed efficientare i 
+processi.
+
+Si considera in questo esempio il tempo di rimborso, il parametro è il numero 
+di giorni necessario al rimborso e il tempo effettivamente trascorso prima 
+della notifica alla banca di avvenuto bonifico.
+Si suddividono i dati in quadrimestri:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c | c | c | c}
+      & 1Q & 2Q & 3Q \\ \hline
+    1 & 30 & 22 & 31 \\ \hline
+    2 & 24 & 24 & 20 \\ \hline
+    3 & 31 & 25 & 17 \\ \hline
+    4 & 26 & 25 & 17 \\ \hline
+    5 & 35 & 26 & 13 \\ \hline
+    6 & 25 & 25 & 21 \\ \hline
+    7 & 24 & 24 & 24 \\ \hline
+    8 & 30 & 25 & 23 \\ \hline
+    9 & 11 & 23 & 22 \\ \hline
+    10 & 7  & 28 & 20 
+    \end{tabular}
+\end{table}
+
+Nel diagramma stelo e foglie si avrà:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|l}
+        S & L \\ \hline
+        0 & 7 \\ \hline
+        1 & 1 3 \\ \hline
+        1 & 9 7 \\ \hline
+        2 & 4 4 2 4 4 4 3 0 1 4 3 2 0 \\ \hline
+        2 & 6 5 5 6 5 5 8 \\ \hline
+        3 & 0 1 0 \\ \hline
+        3 & 5 \\ \hline
+        4 & 4
+    \end{tabular}
+\end{table}
+
+Viene poi riordinato.
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c| c|l}
+      &  S & L \\ \hline
+    1  &  0 & 7 \\ \hline
+    3  &  1 & 1 3 \\ \hline
+    5  &  1 & 7 9 \\ \hline
+    (13) &  2 & 0 0 1 2 2 3 3 4 4 4 4 4 4  \\ \hline
+    12  &  2 & 5 5 5 5 6 6 8\\ \hline
+    5  &  3 & 0 0 1 \\ \hline
+    2  &  3 & 5 \\ \hline
+    1  &  4 & 4
+    \end{tabular}
+\end{table}
+Il numero in parentesi indica il numero di foglie perchè si "scollina" rispetto 
+ai dati.
+Visivamente si vede la disersione dei dati e la tendenza centrale, è poi 
+possibile ispezionare facilmente i dati per valutare i precentili, il k-mo 
+percentile è il dato indicizzato da $k/100(N + 0.5 )$ con $N$ la numerosità 
+complessiva delle osservazioni.
+Si calcola ad esempio il 10mo percentile, è il valore indicizzato da 3.5, sarà 
+il valore tra il terzo e il quarto rilievo ordinati in maniera crescente, 
+dunque tra il 10 
+$$
+10^\circ \rightarrow 15\ g
+$$
+la mediana invece
+$$
+50^\circ \rightarrow 24\ g
+$$
+Il primo quartile:
+$$
+25^\circ \rightarrow 21\ g
+$$
+il terzo quartile:
+$$
+75^\circ \rightarrow 26\ g
+$$
+
+Un ulteriore indice è l'IQR (range interquartile), è la differenza tra il terzo 
+e il primo quartile
+$$
+IQR = 26 - 21 = 5\ g
+$$
+è un indice della dispersione dei dati.
+La distribuzione è abbastanza piccata, la maggior parte dei valori sono 
+addensati attorno al dato mediano, l'IQR è anche piccolo dunque si può fare 
+affidamento che in circa tre settimane una pratica viene conclusa.
+
+\section{Box plot}
+Il \textbf{Box Plot} è tipicamente un rettangolo rappresentabile in un 
+diagramma degli assi cartesiani, ha gli estremi compresi tra il primo e terzo 
+quartile, viene anche rappresentata la mediana da una riga centrale, si 
+rappresenta un box per ogni quadrimestre, si vede subito come si sia stati 
+particolarmente efficienti nel secondo quadrimestre.
+È un caso? I box plot vengono tipicamente tracciati con i "baffi" (wiskers), 
+senza questi si perderebbero i dati che non rientrano nel quartile, si avrà la 
+rappresentazione, mediante i wiskers, il prolungamento verso i valori minimo e 
+massimo.
+
+Più recentemente si è diffuso l'uso dei box-plot modificati, hanno una 
+lunghezza dei baffi standardizzata e pari ad 1.5 volte l'IQR, questo fa sì che 
+se ci fossero degli elementi all'esterno di questo range viene rappresentato 
+singolarmente mediante una crocetta o un asterisco e chiamati \textit{outlier}, 
+ovvero dati ``anomali" che probabilmente non fanno statistica.
+
+Implementano criteri per implementare o validare i dati o effettuare una 
+cernita nella valutazione delle prestazioni. In questo caso la grandezza non è 
+misurabile in quanto grandezza fisica, nonostante sia comunque un parametro 
+oggettivo.
+
+
+Talvolta è possibile riportare i valori delle singole osservazioni in un 
+diagramma cartesiano, ssi vede ad esempio un certo andamento in un anno di 
+esercizio, confrontato con il logbook dei dati degli anni precedenti si può 
+determinare la caratterisica del processo di erogazione del servizio, si 
+possono individuare ad esempio delle cause stagionali, nel periodo estivo i 
+tempi si allungano.
+
+\section{Istogramma}
+È possibile vedere come si disperde l'indice di qualità mediante l'istogramma, 
+i dati vengono ripartiti in ``classi'', il numero di classi viene solitamente 
+scelto mediante la regola di Sturge $n_c = 1 + \log_2 (N)$ nel caso di numerosi 
+dati oppure $n_c = \sqrt{N}$ per $N$ piccolo, nessuno vieta di utilizzare un 
+numero diverso di calssi.
+I dati vengono classificati mediante un intervallo $\Delta = \frac{max-min}{n_c}
+$ in ognuno di questi intervalli si riporta il numero di occorrenze di valori 
+che rientrano in questo intervallo, si rappresenta dunque un bar-plot con le 
+occorrenze.
+I numeri sono solitamente riportati in termini relativi, sommando tutte le 
+occorrenze si ottiene proprio $N$.
+Talvolta si rappresentano istogrammi con classi di estensione non uniforme, in 
+tal caso anzichè riportare il numero di occorrenze si riporta il numero di 
+occorrenze diviso il $\Delta_k$, in tal caso sarà la somma delle aree dei 
+rettangoli a fornire il valore unitario o $N$ se l'istogramma è fornito in 
+termini relativi o meno.
+
+Talvolta l'istogramma viene rappresentato nella forma di istogramma 
+``cumulativo'' ovvero nella rappresentazione cumulativa delle occorrenze, in 
+maniera incrementale fino a raggiungere l'ordinata $N$ o 1.
+
+\section{Indici}
+Gli indici utilizzati nella rappresentazione dei dati sono visti come variabili 
+aleatorie, possono essere di tipo discreto o continuo. Per variabili aleatorie 
+discrete o continue sono forniti concetti di distribuzione di probabilità e 
+funzione densità di probabilità.
+\begin{table}[h]\centering
+    \begin{tabular}{c | c|c}
+             & Media & Varianza \\ 
+    Discreta & $\mu = \sum_i x_i p(x_i)$ & $ \sigma^2_{x_i}= \sum_{i} (x_i -\mu)^2 p(x_i)$ \\ \hline
+    Continua & $\mu = -\int_{-\infty}^{+\infty} pdf(x) dx$ &  $\sigma_x^2 = \int_{-\infty}^{+\infty} (x-\mu)^2 pdf(x)dx $ 
+    \end{tabular}
+\end{table}
+
+Non ha senso definire nelle variabili continue una probabilità per ogni valore 
+nell'intervallo, il valore della probabilità si ricava integrando gli estremi 
+nell'intervallo di probabilità continua.
+L'integrale della funzione di densità di probabilità fornisce la distribuzione 
+cumulativa della variabile continua.
+
+
+Se la distribuzione di probabilità è uniforme $p(x_i) \text{ uniforme } p(x_i) = \frac{1}{N}\ \forall\ i$ dunque la media $ \mu = \frac{1}{N} \sum_i x_i$
+e la varianza
+$\sigma_{x_i}^2 = \frac{1}{N} \sum_i (x_i - \mu)^2 $
+
+
+
+\subsection{Esempio di analisi di un processo con due dadi}
+
+Si riesce a deterimanre la distribuzione di probabilità dei risultati 
+ottenibili con il lancio di due dadi?
+Gli esiti, intesi come punteggi sono tutti i valori compresi tra 1 e 12.
+$$
+x_i \ \text{punteggi } = \{2, \ldots, 12\}
+$$
+Si calcola il numero delle possibili combinazioni realizzabili 
+$$\begin{aligned}
+p(2) &= \frac{1}{36} \quad \{1,1\} \\
+p(3) &= \frac{2}{36} \quad \{1,2\} \cup \{2,1\} \\
+p(4) & = \frac{3}{36} \quad \{1,3\} \cup \{3,1\}\cup\{2,2\}\\
+p(5) & = \frac{4}{36} \quad \{1,4\} \cup \{4,1\} \cup \{2,3\} \cup \{3,2\} \\
+p(6) &= \frac{5}{36} \quad \{1,5\}\cup\{5,1\}\cup\{2,4\}\cup\{4,2\}\cup\{3,3\}  \\
+p(7) & = \frac{6}{36} \quad \{1,6\}\cup\{6,1\}\cup\{2,5\}\cup\{5,2\}\cup\{3,4\}\cup\{4,3\}\\
+p(8) &= \frac{5}{36} \quad \{2,6\}\cup\{6,2\}\cup\{3,5\}\cup\{5,3\}\cup\{4,4\}  \\
+p(9) & = \frac{4}{36}\quad \{3,6\}\cup\{6,3\}\cup\{4,5\}\cup\{5,4\} \\
+\end{aligned}
+$$
+
+Volendo condensare la distribuzione di probabilità in un'espressione analitica
+si potrebbe affermare che:
+$$
+p(x_i) = \frac{1}{6} - \frac{|x_i-7|}{36}\quad x_i=2,\ldots,12
+$$
+
+%Inserisci nella lezione successiva
+Definizione di \textbf{fattoriale}
+$$
+n! \stackrel{\Delta}{=} n(n-1)\cdot(n-2)\cdot\ldots\cdot2\cdot1
+$$
+Per un insieme di $n$ elementi, il fattoriale rappresenta il numero di 
+possibili permutazioni degli elementi.
+È facile dimostrare per induzione il numero di possibili permutazioni al 
+variare di $n$.
+
