@@ -202,7 +202,7 @@ y = x_1^2 + x_2^2+\ldots + x_N^2
 $$la statistica così costruita è distribuita $\chi^2_N$ con N gradi di libertà, la distribuzione è addensata e spostata verso sinistra, all'aumentare di $N$ l'indice di simmetria migliora ma non convergerà mai ad una gaussiana, tende sempre ad insistere su un semiasse.
 
 $$
-\chi_0^2 = \frac{(N-1)S_x^2}{\sigma^2} = \cancel{(N-1)}\frac{1}{\cancel{N-1}}\sum_{i=1}^N \left(\frac{x_i-\bar{x}}{\sigma}\right)^2
+\chi_0^2 = \frac{(N-1)S_x^2}{\sigma^2} = \cancel{(N-1)}\frac{1}{\cancel{N-1}}\sum_{i=1}^N \left(\frac{x_i-\bar{x}}{\sigma}\right)^2 \sim \chi^2_{N-1}
 $$
 Gli argomenti della somma ricadono negli scarti rispetto alla media, dunque osservando la varianza degli elementi sono variabili aleatorie normali standard, a mmedia nulla e varianza unitaria. La somma dei quadrati dei valori ha una distribuzione campionaria di tipo $\chi^2$.
 Variabili di questo tipo si trovano quando si rapporta una stiam della varainza alla varianza statistica, una statistica così costruita ricade in questo modello.

@@ -1,0 +1,94 @@
+
+\subsection{Statistica di Fisher}
+variabile utilizzata per lo studio della varianza, chiamata statistica di Fisher.
+Siano due variabili aleatorie $W\sim \chi^2_u$  e $y\sim\chi^2_v$
+allora la seguente è chiamata variabile di Fisher
+$$
+F = \frac{\frac{w}{u}}{\frac{y}{v}} \sim F_{u,v}
+$$
+È ancora una curva a campana, con una certa dissimetria. Si costruisce di fatto una variabile di Fisher se si voglion oconfrontare le varianze di due popolazioni da campionare per capire se hanno un comportamento statistico similare o meno, se si costruisce una funzione 
+$$
+F_0 = \frac{S_1^2}{S_2^2}
+$$
+restituirà una variabile di Fisher, composta dalle stime di due varianze di due 
+popolazioni normali ma con medie e varianze eventualmente diverse, il loro 
+rapporto è una variabile di Fisher, si supponga inizialmente che siano due popolazioni identiche acquisite con un numero di campioni differente $N_1$ e $N_2$
+$$
+F_0 = \frac{\frac{S_1^2(N_1-1)}{\sigma^2(N_1-1)}}{\frac{S_2^2(N_2-1)}{\sigma^2(N_2-1)}} = \frac{\frac{\chi_1^2}{N_1-1}}{\frac{\chi_2^2}{N_2-1}}
+$$
+????
+
+Le due varianze potrebbero non essere identiche, non è una condizione 
+necessaria.
+Potrebbero essere presenti due linee di produzione, nomminalmente identiche che 
+hanno subito un certo invecchiamento, dunque i processi produttivi potrebbero 
+essere diventati differenti, si osserva la caratteristica di qualità su 
+entrambe le linee, stimando le varianze e su base statistica, eventualmente 
+perso il know-how sul proccesso, si può capire, mediante questa variabile, se è 
+avvenuta una divergenza tra le due linee produttive.
+
+Si definiscono regioni di accettazione o di rifiuto del rapporto tra le varianze, dunque la decisione indotta dalla regola codificata può avere esiti differenti.
+
+\newpage
+\section{Test delle ipotesi}
+Si supponga di avere una variabile aleatoria $x_i\sim N(\mu,\sigma^2)$, può essere una misura di qualità di un prodotto o servizio.
+Condurre un test delle ipotesi significa interrogarsi sui valori di media, statistica o varianza.
+Test sulla media con varianza nota, si utilizza la seguente terminologia per tale test
+$$
+H :  \begin{cases}
+    H_0: &\mu = \mu_0 \text{\ ipotesi nulla, riferimento}\\
+    H_1: &\mu \neq \mu_0 \text{\ ipotesi alternativa, bilaterale}\\
+    H_0: &\mu \geq \mu_0 \\
+    H_1: &\mu < \mu_0 \text{\ ipotesi alternativa, monolaterale} \\
+    H_0: &\mu \leq \mu_0 \\
+    H_1: &\mu > \mu_0 \text{\ ipotesi alternativa, monolaterale} 
+\end{cases}
+$$
+
+Sia la variabile $\alpha$ di probabilità $\alpha = 0.05$ per condurre il test delle ipotesi si conduce una statistica
+$$
+Z_0 = \frac{\bar{x} - \mu_0}{\frac{\sigma}{\sqrt{N}}}
+$$
+mediante un processo di ispezione a campione, ad esempio si avranno 15 rilievi, si stima $\bar{x}$ e si ricava $Z_0$ utilizzando lo storico del processo, se in linea con le aspettativle la variabile $Z_0$ è normale standard e i suoi valori sono caratterizzati da una distribuzione simmetrica.
+
+La variabile $\alpha$ ovvero il livello di significatività del test, 
+individua due ascisse, $Z_{-\frac{Z_\alpha}{2}}$ e $Z_{\frac{\alpha}{2}}$, 
+l'area delimitata da queste ascisse sarà in entrambi i casi (aree esterne) 
+$\alpha/2$, vengono chiamate regioni critiche o di rifiuto, la regione centrale 
+invece è detta regione di accettazione o non critica.
+
+La probabilità $\alpha$ è denominata ``rischio del produttore'', un valore 
+$\alpha$ errato potrebbe comportare la non accettazione dell'ipotesi nulla 
+quando vera, rappresenta la probabilità di commettere un errore del I (primo) tipo, 
+quando la probabilità è nulla. 
+
+Un valore di $\alpha$ troppo piccolo, può condurre invece un danno a causa della eventuale scarsa qualità del lotto.
+
+Nell'esecuzione di un test esiste anche l'errore del II tipo, caratterizzato dalla probabilità $\beta$, la probabilità $\beta$.
+
+C'è una probabilità di non accorgersi dell'errore nel test????
+
+Se ci si ritrova con $Z_0$ nella regione di accettazione, il test statistico sarà uno scarto tra ciòc he è misurato.
+
+Si utilizzano delle tabelle per rappresentare la statistica, si costruisce una 
+statisctica con tali valori in funzione di $\Phi(-z\frac{\alpha}{2})$, il 
+rischio del produttore è legato al livello di significatività del test, quello 
+del opener delta. Invertendo tale relazione $\frac{-Z_\alpha}{2}\simeq 1.96$.
+
+L'altra informazione predicabile con il test è
+$$
+\bar{x} - Z_\frac{\alpha}{2}\frac{\sigma}{\sqrt{N}}<\mu < \bar{x} + Z_\frac{\alpha}{2}\frac{\sigma}{\sqrt{N}}
+$$
+con livello di fiducia $(1-\alpha)\%$, conoscendo la distribuzione campionaria di $\bar{x}$ allora $Z_\frac{\alpha}{2}$ è il fattore di copertura necessario ad avere un livello di fiducia $\alpha$
+
+Se l'ipotesi alternativa non è bilaterale si ha una regione critica corrispondente ad un'ipotesi $H_1: \mu<\mu_0$, supponendo una regione critica monolatera, in questo caso, una volta fissato ikl livello di fiducia $\alpha$, si valuta la solita caratteristica 
+$$
+\alpha:Z_0=\frac{\bar{x} - \mu_0}{\frac{\sigma}{\sqrt{N}}}
+$$
+tuttavia, cambia la regione di rifiuto, divenuta monolatera, si considera uno $Z_\alpha$ pari all'ascissa per cui l'area precedente ha probabilità $\alpha$, tutti i valori maggiori sono accettati.
+In base all'esito del test, la media statistica sarà
+$$
+\mu > \bar{x} - |Z_\alpha|\frac{\sigma}{\sqrt{N}}\ \text{con } (1-\alpha)\%\text{ livello di fiducia}
+$$
+
+
