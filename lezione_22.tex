@@ -91,4 +91,33 @@ $$
 \mu > \bar{x} - |Z_\alpha|\frac{\sigma}{\sqrt{N}}\ \text{con } (1-\alpha)\%\text{ livello di fiducia}
 $$
 
+Un ulteriore aspetto da discutere durante un test delle ipotesi, ad esempio di tipo bilaterale è il seguente:
+fissare a priori un livello $\alpha$ può essere riduttivo, può essere  una scelta concordata ma limitativa, si considera in luogo di $\alpha$ una probabilità choiamata `p-value'.
+Se si ottiene un valore $Z_0$ si può pensare di valutare quale sarebbe l'$\alpha$ più piccolo che  porterebbe in una situazione di indeterminazione, ovvero il più piccolo $\alpha$ per cui rifiuto l'ipotesi nulla.
+Se $\alpha$ è molto grande ci si restringe troppo ad un intervallo stretto e centrato nello zero della pdf normale standard, se si riduce ci sarà un valore di indeterminazione, il più piccolo per cui ancora si rifiuta l'ipotesi nulla, tale $\alpha$ è detto p-value.
+
+Un p-value molto piccolo implica che il processo ha un grande margine di accettazione, tiene conto dell'esito puntuale del test, rispetto all'$\alpha$ scelto a priori, dà più informazioni. Può essere valutato nel seguente modo
+$$
+p-value = \begin{cases}
+    2(1-\Phi(|Z_0|)) &\quad \mu\neq\mu_0 \\
+    1-\Phi(Z_0) & \quad \mu > \mu_0 \\
+    \Phi(Z_0) & \quad \mu<\mu_0
+\end{cases}
+$$
+con $\Phi$ funzione errore che restituisce l'integrale da $-\infty$ a $Z_0$, il coefficiente 2 è dato dalla regione bilaterale, in caso contrario con regione critica monolatera, non è presente.
+
+Non sempre si conduce un test delle ipotesi con varianza nota, in tal caso 
+contrario, si può generalizzare quanto detto a patto di cambiare la statistica 
+di riferimento, non si può costruire la variabile $Z_0$ ma $t_0 = \frac{\bar{x}-\mu_0}{\frac{S_x}{\sqrt{N}}}$, non cambia poi nulla nella trattazione e nella 
+formulazione del test delle ipotesi, si è perso un campione per la stima della 
+varianza, il comportamento non sarà normale standard ma sarà una ``t-di-Student'' con $N-1$ gradi di libertà.
+
+Fissato $\alpha$ si troveranno le ascisse $t_\frac{\alpha}{2}$ e
+$-t_\frac{\alpha}{2}$, la media sarà compresa tra 
+$$
+\bar{x} - t_\frac{\alpha}{2}\frac{S_x}{\sqrt{N}} < \mu < \bar{x} + t_\frac{\alpha}{2} \frac{S_x}{\sqrt{N}}
+$$
+i fattori di copertura da utilizzare dipendono in questo caso dalla dimensione del campione.
+
+Anche in questo caso si possono considerare le ipotesi alternative di tipo monolatero e stimare il $p-value$ tenendo conto dell'esito puntuale dell'ispezione dei dati.
 
