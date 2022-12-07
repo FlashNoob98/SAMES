@@ -1,0 +1,156 @@
+
+\subsection{Test delle ipotesi su $\sigma^2$}
+Si considera il test delle ipotesi sulla varianza, con dati estratti da una popolazione di tipo normale
+$$
+\begin{cases}
+    H_0: & \sigma^2 = \sigma^2_0\\
+    H_1: & \sigma^2 \neq \sigma^2_0
+\end{cases}
+$$
+Per condurre il test, si considera la statistica dei riferimento $\chi_0^2$ ccosì definita:
+$$
+\chi_0^2 = \frac{(N-1)S^2_x}{\sigma_0^2}
+$$
+dove
+$$
+S^2_x = \frac{1}{N-1}\sum_{i=1}^{N} (x_i - \bar{x})^2
+$$
+
+Si fissa un livello di significatività $\alpha$, l'ipotesi richiama ad una 
+regione bilaterale, costituita da due intervalli disgiunti, si individueranno 
+due ascisse $\chi^2_{\alpha/2}$ e $\chi^2_{1-\alpha/2} $
+La regola per verificare se la varianza sia compatibile con il riferimento o meno è la seguente: si stima la statistica $\chi^2$, se si trova nella regione di accettazione si accetta la variabilità dei valori della popolazione, viceversa si rifiuta la varianza.
+
+A prescindere dalll'esito del test, si può esprimere per la varianza la sua appartenenza ad un intervallo con un livello di fiducia pari a $(1-\alpha)\%$ 
+$$
+\frac{(N-1)S^2_x}{\chi_{\alpha/2}^2} < \sigma^2 < \frac{(N-1)S^2_x}{\chi_{1-\alpha/2}^2}
+$$
+
+Si fissa un livello di significatività $\alpha$, si valuta l'ipotesi di accettazione monolatera con $\sigma^2 < \frac{(N-1)S^2_x}{\chi^2_{1-\alpha}}$
+
+\subsection{Errore del secondo tipo}
+Viene definito con $\beta$ il rischio del consumatore, ovvero la probabilità 
+che si verifichi l'errore del secondo tipo: si esegue un test delle ipotesi, ad 
+esempio sulla media, essa non è in linea con il valore di riferimento 
+utilizzato per condurre il test ma non viene notato, si accetta l'ipotesi 
+sbagliata, questo evento ha una probabilità non nulla di verificarsi.
+
+Si raccoglie il campione, si stima $Z_0 = \frac{\bar{x}-\mu_0}{\sigma/\sqrt{N}}\sim N(0,1)$
+
+La media non è congruente a $\mu_0$ ma ha un certo scarto rispetto ad essa, dunque la $Z_0$ risulta traslata di un certo $\delta/\sigma/\sqrt{N}$, la statistica valutata non sarà normale standar, ma normale a varianza unitaria centrata in $\frac{\delta}{\sigma}\sqrt{N}$.
+
+Si considera l'ascissa $Z_{\alpha/2}$, l'area che comprende la statistica sarà quella traslata a destra, dunque $Z_0$ ha la probabilità di finire nella regione di accettazione nominale, quella normale standard.
+
+Un test delle ipotesi sufficientemente potente dovrebbe escludere l'ipotesi nulla, dovuta alla eventuale traslazione.
+
+La probabilità $\beta$ corrisponde a:
+$$
+\beta = \Phi\left(Z_{\alpha/2}-\frac{\delta}{\sigma}\sqrt{N}\right) - \Phi\left(-Z_{\alpha/2}-\frac{\delta}{\sigma}\sqrt{N}\right)
+$$
+con 
+$$
+\Phi(Z) = \frac{1}{2\pi} \int_{-\infty}^Z e^{-\frac{u^2}{2}}du
+$$
+
+La statistica valutata a causa dello scarto $\delta$ è slittata, dunque quando 
+si esegue il test riferito alla normale standard esiste una probabilità di 
+trovare i valori $Z_0 < Z_{\alpha/2}$, tale probabilità individua il rischiio 
+del consumatore $\beta$. Se $\delta$ è molt ogrande, la probabilità $\beta$ 
+diviene molto bassa, ovevro se cè uno scarto evidente tra la caratteristica di 
+qualità e l'effettiva qualità diventa basso.
+
+È consuetudine esaminare il rischio del consumazioni tore consultando degli abachi dove sulle ascisse si riporta lo scarto $\delta/\sigma$, non contiene $\sqrt{N}$, si otterranno varie curve decrescenti, all'aumentare di $N$, si nota con più facilità la presenza delle variazisaoni.
+
+La probabilità di stiamre la variabile $\beta$ è rappresentata su tale abaco, durante la fase di progettazione del test delle ipotesi.
+
+Talvolta il test delle ipotesi viene condotto non per confrontare una 
+statistica con un riferimento, ma per confrontare ad esempio la media di 
+popolazioni differenti: un esempio concreto è il caso in cui si abbiano due 
+linee di produzione gemelle con vite operative differenti, ci si aspetta una 
+differenza tra le prestazioni, anche se producono lo stesso oggetto. Ci si pone 
+di confrontare se reagità oppure no.
+
+Dal punto di vista astratto, tali test si effettuano conducendo test sulle ipotesi sulle differenze tra medie di popolazioni assunte sempre normali.
+$
+\mu_1 - \mu_2
+$
+$$
+\begin{cases}
+    H_0: & \mu_1-\mu_2 = \Delta_0 \\
+    H_1: & \mu_1-\mu_2 \neq \Delta_0 
+\end{cases}
+$$
+$\Delta_0$ può essere o meno pari a zero.
+
+Il test delle ipotesi si esegue:
+$$
+\{x_{1i}\}_{i=1,2,\ldots, n} \quad \{x_{2i}\}_{i=1,2,\ldots,n} 
+$$
+Si esegue la statistica
+$$
+Z_0 = \frac{(\bar{x}_1 - \bar{x}_2) -\Delta_0}{\sqrt{\frac{\sigma^2_1}{N_1}+\frac{\sigma_2^2}{N_2}}} \sim N(0,1)
+$$
+La statistica di riferimento è normale standard. Quella al denominatore è proprio la varianza della stima delle differenze tra medie.
+
+Se le varianze non sono note ma sono uguali tra loro, in alcuni casi ragionevoli, si ottiene:
+$$
+t_0 = \frac{(\bar{x_1}-\bar{x_2})-\Delta_0}{S_p \sqrt{\frac{1}{N_1}+\frac{1}{N_2}}} \sim \text{ t-di-Student } (N_1+N_2-2) \text{ DOF}
+$$
+con $S_p$ detto pool-estimator, uno stimatore della varianza incognita così ottenuto:
+$$
+S_p^2 = WS_1^2 + (1-W)S_2^2
+$$
+i coefficienti $W$ e $1-W$ sono i coefficienti necessari ad ottenere una media armonica:
+$$
+W = \frac{N_1-1}{N_1+N_2-2} \quad (1-W) = \frac{N_2-1}{N_1+N_2-2}
+$$
+Si utilizzano i gradi di libertà come coefficienti di peso, che vengono di 
+conseguenza normalizzati, il coefficiente di normalizzazione sono i gradi di 
+libertà.
+
+Si può assegnare una certa probabilità alla differenza tra le medie,
+$$
+(\bar{x_1}-\bar{x_2}) - t_{\alpha/2}S_p\sqrt{\frac{1}{N_1}+\frac{1}{N_2}} <
+\mu_1-\mu_2 < (\bar{x_1}-\bar{x_2}) + t_{\alpha/2}S_p\sqrt{\frac{1}{N_1}+\frac{1}{N_2}}
+$$
+con grado d iconfidenza $1-\alpha$.
+
+Nel caso in cui le popolazioni fossero diverse
+$$
+t_0 = \frac{(\bar{x_1}-\bar{x_2})-\Delta_0}{\sqrt{\frac{S_1^2}{N_1}+\frac{S_2^2}{N_2}}} \sim 
+$$
+è ostico da dimostrare che questa statistica ha un numero di gradi di libertà  con una formula detta di Welch Satterwaithle 
+$$
+\nu = \frac{\left(\frac{S_1^2}{N_1}+\frac{S_2^2}{N_2}\right)^2}
+{\frac{\left(\frac{S_1^2}{N_1}\right)^2}{N_1+1} + \frac{\left(\frac{S_2^2}{N_2}\right)^2}{N_2+1}} -2
+$$
+
+
+\subsection{Test delle ipotesi su varianze di popolazioni N}
+In tal caso il test delle ipotesi si formula
+$$
+\begin{cases}
+    H_0: & \sigma^2_1 = \sigma^2_2 (\sigma^2)\\
+    H_1: & \sigma^2_1 \neq \sigma^2_2 
+\end{cases}
+$$
+SI raccolgono una coppia di campioni con diversi gradi di libertà $X_1\{N_1\}, X_2\{N_2\}$, si stima una statistica
+$$
+F_0 = \frac{S_1^2}{S_2^2} 
+$$
+data dal rapporto degli stimatori delle varianze.
+Si ricade nella variabile aleatoria
+$$
+F_{N_1-1,N_2-1} = \frac{\frac{w}{u}}{\frac{y}{v}}
+$$
+la distribuzione di Fisher presenterà due ascisse nelll'ipotesi bilaterale con 
+$\alpha$ fissato
+$F_{\alpha/2,N_1-1,N_2-1} $ e $F_{1- \alpha/2,N_1-1,N_2-1}$
+Il test delle ipotesi si conduce sempre con la stessa metodica, se le due popolazioni sono nella regione di accettazione, avranno la medesima varianza, viceversa no.
+I due valori prima ricavati sono correlati dalla seguente relazione, proprietà della variabile di Fisher:
+$$
+F_{\alpha,u,v} = F_{1-\alpha,v,u}
+$$
+
+Il test di Fisher è importante per capire l'influenza di un fattore su un processo, mediante l'analisi della varianza svolto proprio mediante un test di Fisher.
+
